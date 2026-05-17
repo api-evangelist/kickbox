@@ -39,7 +39,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.kickbox.com
-      - type: API Reference
+      - type: APIReference
         url: https://docs.kickbox.com/reference/single-verification
       - type: PHP SDK
         url: https://github.com/kickboxio/kickbox-php
@@ -53,9 +53,9 @@ common:
     url: https://docs.kickbox.com
   - type: Pricing
     url: https://kickbox.com/pricing
-  - type: Sign Up
+  - type: SignUp
     url: https://app.kickbox.com/signup
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/kickboxio
   - type: Support
     url: https://kickbox.com/support
