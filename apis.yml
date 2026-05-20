@@ -47,6 +47,8 @@ apis:
         url: https://github.com/kickboxio/kickbox-python
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/kickbox
   - type: Website
     url: https://kickbox.com
   - type: Documentation
