@@ -61,6 +61,8 @@ common:
     url: https://github.com/kickboxio
   - type: Support
     url: https://kickbox.com/support
+  - type: LLMsTxt
+    url: https://docs.kickbox.com/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
