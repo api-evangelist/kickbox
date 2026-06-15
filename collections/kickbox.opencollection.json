@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kickbox Email Verification API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify a single email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v2/verify",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "The email address to verify."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Verification timeout in milliseconds."
+              }
+            ]
+          },
+          "docs": "Verify a single email address"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start a batch verification job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kickbox.com/v2/verify-batch",
+            "headers": [
+              {
+                "name": "X-Kickbox-Filename",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Start a batch verification job"
+        },
+        {
+          "info": {
+            "name": "Get the status or result of a batch verification job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v2/verify-batch/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Batch job ID."
+              }
+            ]
+          },
+          "docs": "Get the status or result of a batch verification job"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the account verification balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v2/balance"
+          },
+          "docs": "Get the account verification balance"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Open",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check if a domain is a known disposable email provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v1/disposable/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Check if a domain is a known disposable email provider"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
