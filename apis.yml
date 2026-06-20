@@ -8,7 +8,7 @@ description: >-
   monitoring suite. Kickbox provides a simple HTTPS REST API authenticated by
   API key returning structured verification results with reason codes.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Email Verification
   - Email Validation
