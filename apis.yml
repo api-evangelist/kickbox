@@ -55,13 +55,13 @@ common:
     url: https://docs.kickbox.com
   - type: Pricing
     url: https://kickbox.com/pricing
-  - type: SignUp
+  - type: Signup
     url: https://app.kickbox.com/signup
   - type: GitHubOrganization
     url: https://github.com/kickboxio
   - type: Support
     url: https://kickbox.com/support
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.kickbox.com/llms.txt
 maintainers:
   - FN: Kin Lane
