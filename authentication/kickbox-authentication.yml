@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/kickbox-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: TokenAuth
+  type: http
+  scheme: bearer
+  bearerFormat: token
+  description: |-
+    Kickbox API key sent in the Authorization header in the form
+    `Authorization: token YOUR_API_KEY`.
+  sources:
+  - openapi/kickbox-openapi.yml

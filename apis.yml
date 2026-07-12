@@ -47,6 +47,10 @@ apis:
         url: https://github.com/kickboxio/kickbox-python
 
 common:
+  - type: DomainSecurity
+    url: security/kickbox-domain-security.yml
+  - type: Authentication
+    url: authentication/kickbox-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/kickbox
   - type: Website
@@ -63,6 +67,8 @@ common:
     url: https://kickbox.com/support
   - type: LlmsText
     url: https://docs.kickbox.com/llms.txt
+  - type: Blog
+    url: https://blog.kickbox.com/rss/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
