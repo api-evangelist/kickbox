@@ -1,0 +1,21 @@
+{
+  "repo": "kickbox",
+  "feeds": [
+    {
+      "source": "https://blog.kickbox.com/rss/",
+      "feed_url": "https://blog.kickbox.com/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://docs.kickbox.com/llms.txt",
+      "feed_url": "https://docs.kickbox.com/llms.txt",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 15
+}
