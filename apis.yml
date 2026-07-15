@@ -47,6 +47,8 @@ apis:
         url: https://github.com/kickboxio/kickbox-python
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/kickbox-agentic-access.yml
   - type: DomainSecurity
     url: security/kickbox-domain-security.yml
   - type: Authentication
