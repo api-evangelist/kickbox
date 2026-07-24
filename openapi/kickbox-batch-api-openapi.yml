@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  title: Kickbox Email Verification Account Batch API
+  description: 'REST API for verifying the deliverability of email addresses with Kickbox.
+
+    Endpoint paths and authentication are derived from the official Kickbox PHP
+
+    SDK at https://github.com/kickboxio/kickbox-php (see HttpClient.php and
+
+    Api/Kickbox.php), which is the canonical client for the production API.
+
+    '
+  version: 2.0.0
+  contact:
+    name: Kickbox
+    url: https://kickbox.com/
+    email: help@kickbox.com
+servers:
+- url: https://api.kickbox.com
+  description: Kickbox production API.
+- url: https://open.kickbox.io
+  description: Kickbox Open (disposable lookup) API.
+security:
+- TokenAuth: []
+tags:
+- name: Batch
+  description: Bulk CSV email verification.
+paths:
+  /v2/verify-batch:
+    put:
+      tags:
+      - Batch
+      summary: Start a batch verification job
+      operationId: verifyBatch
+      parameters:
+      - name: X-Kickbox-Filename
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          text/csv:
+            schema:
+              type: string
+              description: Newline-delimited list of email addresses.
+      responses:
+        '200':
+          description: Batch job created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchSubmitResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v2/verify-batch/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: Batch job ID.
+      schema:
+        type: integer
+    get:
+      tags:
+      - Batch
+      summary: Get the status or result of a batch verification job
+      operationId: getBatchResults
+      responses:
+        '200':
+          description: Batch status and (when ready) result download URL.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchStatusResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    BatchStatusResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        status:
+          type: string
+          enum:
+          - pending
+          - processing
+          - completed
+          - error
+        stats:
+          type: object
+          properties:
+            deliverable:
+              type: integer
+            undeliverable:
+              type: integer
+            risky:
+              type: integer
+            unknown:
+              type: integer
+            total:
+              type: integer
+        download_url:
+          type: string
+          format: uri
+        success:
+          type: boolean
+        message:
+          type: string
+    BatchSubmitResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        success:
+          type: boolean
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              message:
+                type: string
+  securitySchemes:
+    TokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Kickbox API key sent in the Authorization header in the form
+
+        `Authorization: token YOUR_API_KEY`.
+
+        '

@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Kickbox Email Verification Account API
+  description: 'REST API for verifying the deliverability of email addresses with Kickbox.
+
+    Endpoint paths and authentication are derived from the official Kickbox PHP
+
+    SDK at https://github.com/kickboxio/kickbox-php (see HttpClient.php and
+
+    Api/Kickbox.php), which is the canonical client for the production API.
+
+    '
+  version: 2.0.0
+  contact:
+    name: Kickbox
+    url: https://kickbox.com/
+    email: help@kickbox.com
+servers:
+- url: https://api.kickbox.com
+  description: Kickbox production API.
+- url: https://open.kickbox.io
+  description: Kickbox Open (disposable lookup) API.
+security:
+- TokenAuth: []
+tags:
+- name: Account
+  description: Account balance and metadata.
+paths:
+  /v2/balance:
+    get:
+      tags:
+      - Account
+      summary: Get the account verification balance
+      operationId: getBalance
+      responses:
+        '200':
+          description: Remaining verification credits.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              message:
+                type: string
+  securitySchemes:
+    TokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Kickbox API key sent in the Authorization header in the form
+
+        `Authorization: token YOUR_API_KEY`.
+
+        '

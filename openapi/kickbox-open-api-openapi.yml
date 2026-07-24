@@ -1,0 +1,65 @@
+openapi: 3.1.0
+info:
+  title: Kickbox Email Verification Account Open API
+  description: 'REST API for verifying the deliverability of email addresses with Kickbox.
+
+    Endpoint paths and authentication are derived from the official Kickbox PHP
+
+    SDK at https://github.com/kickboxio/kickbox-php (see HttpClient.php and
+
+    Api/Kickbox.php), which is the canonical client for the production API.
+
+    '
+  version: 2.0.0
+  contact:
+    name: Kickbox
+    url: https://kickbox.com/
+    email: help@kickbox.com
+servers:
+- url: https://api.kickbox.com
+  description: Kickbox production API.
+- url: https://open.kickbox.io
+  description: Kickbox Open (disposable lookup) API.
+security:
+- TokenAuth: []
+tags:
+- name: Open
+  description: Free disposable-domain lookup (no auth).
+paths:
+  /v1/disposable/{email}:
+    servers:
+    - url: https://open.kickbox.io
+      description: Kickbox Open API (free, no auth).
+    parameters:
+    - name: email
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Open
+      summary: Check if a domain is a known disposable email provider
+      operationId: isDisposable
+      security: []
+      responses:
+        '200':
+          description: Disposable lookup result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  disposable:
+                    type: boolean
+components:
+  securitySchemes:
+    TokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Kickbox API key sent in the Authorization header in the form
+
+        `Authorization: token YOUR_API_KEY`.
+
+        '
