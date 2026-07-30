@@ -8,7 +8,19 @@ description: >-
   monitoring suite. Kickbox provides a simple HTTPS REST API authenticated by
   API key returning structured verification results with reason codes.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kickbox.png
 tags:
   - Email Verification
   - Email Validation
@@ -21,31 +33,68 @@ created: '2026-05-11'
 modified: '2026-05-11'
 specificationVersion: '0.19'
 apis:
-  - aid: kickbox:verification-api
-    name: Kickbox Email Verification API
-    description: >-
-      REST API for verifying the deliverability of email addresses in real
-      time. Returns a result (deliverable, undeliverable, risky, unknown), a
-      reason code, plus flags for role addresses, disposable domains, and free
-      email providers. Authentication uses an API key supplied as a query
-      string parameter or in the Authorization header. Sandbox mode is
-      available for testing without consuming credits.
-    humanURL: https://docs.kickbox.com
-    baseURL: https://api.kickbox.com/v2
-    tags:
-      - Email Verification
-      - Deliverability
-      - Validation
-    properties:
-      - type: Documentation
-        url: https://docs.kickbox.com
-      - type: APIReference
-        url: https://docs.kickbox.com/reference/single-verification
-      - type: PHP SDK
-        url: https://github.com/kickboxio/kickbox-php
-      - type: Python SDK
-        url: https://github.com/kickboxio/kickbox-python
-
+- aid: kickbox:verification-api
+  name: Kickbox Email Verification API
+  description: >-
+    REST API for verifying the deliverability of email addresses in real time. Returns a result (deliverable,
+    undeliverable, risky, unknown), a reason code, plus flags for role addresses, disposable domains,
+    and free email providers. Authentication uses an API key supplied as a query string parameter or in
+    the Authorization header. Sandbox mode is available for testing without consuming credits.
+  humanURL: https://docs.kickbox.com
+  baseURL: https://api.kickbox.com/v2
+  tags:
+  - Email Verification
+  - Deliverability
+  - Validation
+  properties:
+  - type: Documentation
+    url: https://docs.kickbox.com
+  - type: APIReference
+    url: https://docs.kickbox.com/reference/single-verification
+  - type: PHP SDK
+    url: https://github.com/kickboxio/kickbox-php
+  - type: Python SDK
+    url: https://github.com/kickboxio/kickbox-python
+- aid: kickbox:kickbox-account-api
+  name: Kickbox Account API
+  description: Account balance and metadata.
+  humanURL: https://docs.kickbox.com
+  baseURL: https://api.kickbox.com/v2
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/kickbox-account-api-openapi.yml
+- aid: kickbox:kickbox-batch-api
+  name: Kickbox Batch API
+  description: Bulk CSV email verification.
+  humanURL: https://docs.kickbox.com
+  baseURL: https://api.kickbox.com/v2
+  tags:
+  - Batch
+  properties:
+  - type: OpenAPI
+    url: openapi/kickbox-batch-api-openapi.yml
+- aid: kickbox:kickbox-open-api
+  name: Kickbox Open API
+  description: Free disposable-domain lookup (no auth).
+  humanURL: https://docs.kickbox.com
+  baseURL: https://api.kickbox.com/v2
+  tags:
+  - Open
+  properties:
+  - type: OpenAPI
+    url: openapi/kickbox-open-api-openapi.yml
+- aid: kickbox:kickbox-verification-api
+  name: Kickbox Verification API
+  description: Real-time email verification.
+  humanURL: https://docs.kickbox.com
+  baseURL: https://api.kickbox.com/v2
+  tags:
+  - Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/kickbox-verification-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/kickbox-agentic-access.yml
