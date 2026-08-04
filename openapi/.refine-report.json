@@ -1,0 +1,20 @@
+{
+  "provider": "kickbox",
+  "sources": [
+    "kickbox-account-api-openapi.yml",
+    "kickbox-batch-api-openapi.yml",
+    "kickbox-open-api-openapi.yml",
+    "kickbox-verification-api-openapi.yml"
+  ],
+  "outputs": [
+    "kickbox-account-api-openapi.yml",
+    "kickbox-batch-api-openapi.yml",
+    "kickbox-open-api-openapi.yml",
+    "kickbox-verification-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
