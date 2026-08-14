@@ -30,7 +30,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/kickbox/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-11'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: kickbox:verification-api
@@ -55,6 +55,10 @@ apis:
     url: https://github.com/kickboxio/kickbox-php
   - type: Python SDK
     url: https://github.com/kickboxio/kickbox-python
+  - type: GettingStarted
+    url: https://docs.kickbox.com/docs/using-the-api
+  - type: Sandbox
+    url: sandbox/kickbox-sandbox.yml
 - aid: kickbox:kickbox-account-api
   name: Kickbox Account API
   description: Account balance and metadata.
@@ -65,6 +69,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kickbox-account-api-openapi.yml
+  - type: Overlay
+    url: overlays/kickbox-account-api-overlay.yaml
 - aid: kickbox:kickbox-batch-api
   name: Kickbox Batch API
   description: Bulk CSV email verification.
@@ -75,16 +81,30 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kickbox-batch-api-openapi.yml
+  - type: Overlay
+    url: overlays/kickbox-batch-api-overlay.yaml
+  - type: Webhooks
+    name: Batch verification completion callback
+    url: asyncapi/kickbox-batch-webhooks.yml
+  - type: APIReference
+    url: https://docs.kickbox.com/docs/batch-verification-api
 - aid: kickbox:kickbox-open-api
   name: Kickbox Open API
   description: Free disposable-domain lookup (no auth).
-  humanURL: https://docs.kickbox.com
-  baseURL: https://api.kickbox.com/v2
+  baseURL: https://open.kickbox.com/v1
+  humanURL: https://docs.kickbox.com/reference/disposable-email-check
   tags:
   - Open
   properties:
   - type: OpenAPI
     url: openapi/kickbox-open-api-openapi.yml
+  - type: OpenAPI
+    name: Kickbox published disposable-email-check OpenAPI (verbatim)
+    url: openapi/kickbox-disposable-openapi.json
+  - type: Overlay
+    url: overlays/kickbox-open-api-overlay.yaml
+  - type: APIReference
+    url: https://docs.kickbox.com/reference/disposable-email-check
 - aid: kickbox:kickbox-verification-api
   name: Kickbox Verification API
   description: Real-time email verification.
@@ -95,6 +115,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kickbox-verification-api-openapi.yml
+  - type: Overlay
+    url: overlays/kickbox-verification-api-overlay.yaml
+  - type: APIReference
+    url: https://docs.kickbox.com/docs/single-verification-api
 common:
   - type: AgenticAccess
     url: agentic-access/kickbox-agentic-access.yml
@@ -110,16 +134,77 @@ common:
     url: https://docs.kickbox.com
   - type: Pricing
     url: https://kickbox.com/pricing
-  - type: Signup
+  - type: SignUp
     url: https://app.kickbox.com/signup
   - type: GitHubOrganization
     url: https://github.com/kickboxio
   - type: Support
-    url: https://kickbox.com/support
+    url: https://articles.kickbox.com/en/collections/1840339-kickbox-help-articles
+  - type: HelpCenter
+    url: https://articles.kickbox.com/en/collections/1840339-kickbox-help-articles
+  - type: Contact
+    url: https://kickbox.com/contact/
   - type: LlmsText
     url: https://docs.kickbox.com/llms.txt
+  - type: LLMsTxt
+    name: llms.txt (harvested verbatim from docs.kickbox.com)
+    url: llms/kickbox-llms.txt
   - type: Blog
+    url: https://blog.kickbox.com
+  - type: BlogRSS
     url: https://blog.kickbox.com/rss/
+  - type: DeveloperPortal
+    url: https://kickbox.com/kickbox-for-developers/
+  - type: APIReference
+    url: https://docs.kickbox.com/docs/single-verification-api
+  - type: GettingStarted
+    url: https://docs.kickbox.com/docs/using-the-api
+  - type: TermsOfService
+    url: https://docs.kickbox.com/docs/terms-of-service
+  - type: PrivacyPolicy
+    url: https://docs.kickbox.com/docs/privacy-policy
+  - type: Packages
+    url: packages/kickbox-packages.yml
+  - type: SDKs
+    name: Official Kickbox client libraries (Node.js, PHP, Python, Ruby)
+    url: packages/kickbox-packages.yml
+  - type: MCPServer
+    name: Kickbox documentation MCP server (auth-gated)
+    url: mcp/kickbox-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/kickbox-tool-crosswalk.yml
+  - type: Sandbox
+    url: sandbox/kickbox-sandbox.yml
+  - type: Conventions
+    url: conventions/kickbox-conventions.yml
+  - type: ErrorCatalog
+    url: errors/kickbox-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/kickbox-lifecycle.yml
+  - type: StatusPage
+    url: https://status.kickbox.com/
+  - type: DataModel
+    url: data-model/kickbox-data-model.yml
+  - type: Conformance
+    url: conformance/kickbox-conformance.yml
+  - type: TrustCenter
+    url: https://trust.kickbox.com/
+  - type: Compliance
+    url: https://docs.kickbox.com/docs/security-and-compliance
+  - type: Webhooks
+    name: Batch verification completion callback
+    url: asyncapi/kickbox-batch-webhooks.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Plans
+    url: plans/kickbox-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/kickbox-rate-limits.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1
