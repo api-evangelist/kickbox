@@ -1,11 +1,11 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: kickbox.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 13 21:42:56 2026 GMT
+  cert_expires: Nov 11 22:01:19 2026 GMT
   hsts: true
   hsts_max_age: 2592000
 - host: docs.kickbox.com
@@ -24,12 +24,12 @@ domains:
 - domain: kickbox.com
   dnssec: false
   caa:
+  - 0 issue "digicert.com; cansignhttpexchanges=yes"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  - 0 issue "sectigo.com"
   - 0 issue "ssl.com"
   - 0 issuewild "amazon.com"
-  - 0 issuewild "comodoca.com"
-  - 0 issuewild "digicert.com; cansignhttpexchanges=yes"
-  - 0 issuewild "letsencrypt.org"
-  - 0 issuewild "pki.goog; cansignhttpexchanges=yes"
   spf: true
   dmarc: true
   dmarc_policy: reject

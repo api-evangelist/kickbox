@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/using-the-api
+docs: https://docs.kickbox.com/docs/using-the-api#api-limits
+limit_count: 2
+summary: >-
+  Kickbox publishes two concrete, numeric limits on the API Quickstart page: a concurrency ceiling of
+  25 in-flight requests per IP and a throughput ceiling of 8,000 requests per clock minute. Exhaustion
+  of the concurrency ceiling returns HTTP 429 and the docs state the caller may retry immediately.
+limits:
+  - id: parallel-requests-per-ip
+    scope: per-ip
+    type: concurrency
+    limit: 25
+    window: concurrent
+    burst: null
+    status_on_exhaustion: 429
+    retry_guidance: >-
+      "You will receive a 429 error response if there are too many requests in action at once in this
+      way, but you can immediately retry." A slot frees as soon as a response is received and the
+      socket is closed.
+    source: https://docs.kickbox.com/docs/using-the-api
+  - id: requests-per-clock-minute
+    scope: per-account
+    type: throughput
+    limit: 8000
+    window: 1 clock minute
+    burst: null
+    status_on_exhaustion: 429
+    note: >-
+      Documented as a separate limit from the concurrency ceiling. The window is a clock minute, not
+      a rolling minute, so the budget resets on the minute boundary.
+    source: https://docs.kickbox.com/docs/using-the-api
+response_headers:
+  standard_ratelimit_headers: false
+  note: >-
+    Kickbox returns NO RateLimit-*, X-RateLimit-* or Retry-After headers. It documents two custom
+    response headers instead, and neither carries a rate-limit budget — an agent cannot read its
+    remaining request allowance from a Kickbox response and must track the 25-parallel and
+    8,000/minute ceilings client-side. The one runtime signal that is returned is a credit balance,
+    which is a billing quantity rather than a rate limit.
+  headers:
+    - name: X-Kickbox-Balance
+      description: Remaining verification credit balance.
+      kind: quota-balance
+      source: https://docs.kickbox.com/docs/using-the-api
+    - name: X-Kickbox-Response-Time
+      description: Elapsed time in milliseconds that Kickbox took to process the request.
+      kind: timing
+      source: https://docs.kickbox.com/docs/using-the-api
+error_envelope:
+  status: 429
+  body: '{"message": "Rate Limit Exceeded", "success": false}'
+  note: >-
+    The single-verification docs list "Rate Limit Exceeded" as one of the human-readable strings
+    returned in `message` when `success` is false.
+related:
+  quota:
+    model: prepaid verification credits
+    note: >-
+      Separate from rate limiting. Credits are consumed per verification; unknown results are
+      refunded. Kickbox recommends enabling auto-recharge so an API integration does not run out.
+    docs: https://docs.kickbox.com/docs/enabling-auto-recharge
+  spike_detection:
+    docs: https://docs.kickbox.com/docs/spike-detection-alerts
+    status: beta
+    note: >-
+      Customer-configurable alerting (not throttling) on verification volume per API key, per minute
+      or per hour, intended to surface form abuse. Requires beta access.

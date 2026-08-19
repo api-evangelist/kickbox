@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/kickbox-verification-api-openapi.yml, openapi/kickbox-batch-api-openapi.yml,
+  openapi/kickbox-account-api-openapi.yml, openapi/kickbox-open-api-openapi.yml,
+  openapi/kickbox-disposable-openapi.json, mcp/kickbox-mcp.yml
+note: >-
+  Kickbox serves an MCP endpoint at https://docs.kickbox.com/mcp but tools/list is auth-gated
+  (JSON-RPC -32001), and neither the documentation nor llms.txt publishes a tool list. No tool names
+  are therefore known, so crosswalk[] is empty by necessity rather than by omission — mapping unnamed
+  tools to operations would be fabrication. What IS knowable is the REST side: every published
+  operation is recorded in rest_only[] as unbound, which is the honest state of the divergence today.
+  When the MCP tool list becomes enumerable this file should be re-derived and rows moved from
+  rest_only[] into crosswalk[].
+surfaces:
+  openapi:
+    files:
+      - openapi/kickbox-verification-api-openapi.yml
+      - openapi/kickbox-batch-api-openapi.yml
+      - openapi/kickbox-account-api-openapi.yml
+      - openapi/kickbox-open-api-openapi.yml
+      - openapi/kickbox-disposable-openapi.json
+    gated: false
+  graphql:
+    endpoint: null
+    note: Kickbox publishes no GraphQL surface.
+  mcp:
+    url: https://docs.kickbox.com/mcp
+    gated: true
+    note: >-
+      Documentation MCP server on the ReadMe-hosted docs host; tools/list returns 401
+      "Authorization required".
+crosswalk: []
+mcp_only: []
+rest_only:
+  - capability: Single email verification
+    operations:
+      - operationId: verifyEmail
+        method: GET
+        path: /v2/verify
+        source: openapi/kickbox-verification-api-openapi.yml
+        note: >-
+          The marquee operation. Verifies one address and returns result/reason/sendex plus the
+          role, free, disposable, accept_all and did_you_mean flags.
+  - capability: Bulk list verification
+    operations:
+      - operationId: verifyBatch
+        method: PUT
+        path: /v2/verify-batch
+        source: openapi/kickbox-batch-api-openapi.yml
+        note: Accepts up to 1,000,000 addresses as text/csv and returns an async job id.
+      - operationId: getBatchResults
+        method: GET
+        path: /v2/verify-batch/{id}
+        source: openapi/kickbox-batch-api-openapi.yml
+        note: Polls job status (starting, processing, completed, failed) and yields a download_url.
+  - capability: Account
+    operations:
+      - operationId: getBalance
+        method: GET
+        path: /v2/balance
+        source: openapi/kickbox-account-api-openapi.yml
+        note: >-
+          Corroborated by the first-party PHP SDK method getCreditBalance() at
+          lib/Kickbox/Api/Kickbox.php.
+  - capability: Open disposable-domain lookup
+    operations:
+      - operationId: isDisposable
+        method: GET
+        path: /v1/disposable/{email}
+        source: openapi/kickbox-open-api-openapi.yml
+        note: >-
+          Unauthenticated. Kickbox's own published OpenAPI fragment for this endpoint is saved
+          verbatim at openapi/kickbox-disposable-openapi.json, where it carries operationId
+          "disposable-email-check" and server https://open.kickbox.com/v1.
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  mcp_only: 0
+  rest_operations_total: 5
+  rest_operations_with_tool: 0
+  reason_unbound: mcp-tools-list-auth-gated

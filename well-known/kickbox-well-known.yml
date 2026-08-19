@@ -1,0 +1,66 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* on every Kickbox host in apis.yml and OpenAPI servers[]
+result: none
+note: >-
+  Kickbox serves no /.well-known/ discovery documents. Every canonical path was probed on all five
+  hosts and none returned a real document, so NO WellKnown or SecurityTxt pointer is emitted in
+  apis.yml — this file records a verified absence, not a presence. Two false-positive shapes were
+  encountered and are recorded as misses: open.kickbox.io answers HTTP 200 with the ReadMe
+  single-page-app HTML shell for every path (a soft-200, not a document), and docs.kickbox.com
+  returns the same HTML shell with a 404 status. api.kickbox.com is the only host that answers
+  honestly, returning a JSON 404 body.
+hosts:
+  - host: https://api.kickbox.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://docs.kickbox.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404, note: HTML docs shell}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/oauth-protected-resource/mcp, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404, note: HTML docs shell}
+      - {path: /.well-known/agent-card.json, status: 404, note: HTML docs shell}
+      - {path: /.well-known/agent.json, status: 404, note: HTML docs shell}
+  - host: https://kickbox.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://open.kickbox.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: >-
+          SOFT-200 — body is the 155KB ReadMe single-page-app HTML shell, not an RFC 9116 document.
+          Treated as a miss; no SecurityTxt pointer emitted.
+      - {path: /.well-known/openid-configuration, status: 429}
+      - {path: /.well-known/oauth-authorization-server, status: 429}
+      - {path: /.well-known/api-catalog, status: 429}
+      - {path: /.well-known/ai-plugin.json, status: 429}
+      - {path: /.well-known/agent-card.json, status: 429}
+      - {path: /.well-known/agent.json, status: 429}
+  - host: https://app.kickbox.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}

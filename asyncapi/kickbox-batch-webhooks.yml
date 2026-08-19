@@ -1,0 +1,84 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/batch-verification-api
+docs: https://docs.kickbox.com/docs/batch-verification-api#the-batch-verification-callback
+spec_type: none
+asyncapi_published: false
+asyncapi_note: >-
+  Kickbox publishes no AsyncAPI document. It was searched for on the docs host, the API host and the
+  github.com/kickboxio organization (four repositories, all client SDKs) and none exists. This file
+  therefore captures the webhook catalog only — the one real event surface Kickbox ships — and wires
+  type: Webhooks rather than type: AsyncAPI. No AsyncAPI is fabricated.
+summary: >-
+  One webhook: a completion callback for asynchronous batch verification jobs. It is opt-in per job
+  via a request header rather than configured in a dashboard, has no signing or verification
+  mechanism documented, and carries no event-type field because there is only one event.
+webhooks:
+  - name: batch-verification-complete
+    trigger: An asynchronous batch verification job finishes.
+    subscription:
+      style: per-request header
+      header: X-Kickbox-Callback
+      set_on: PUT /v2/verify-batch
+      source_operation: openapi/kickbox-batch-api-openapi.yml#verifyBatch
+      note: >-
+        The callback URL is supplied when the job is created. There is no dashboard webhook
+        configuration, no endpoint registry and no way to list or replay past deliveries.
+    delivery:
+      method: POST
+      content_type: application/json
+      expected_response: 2xx
+      expected_response_note: The specified callback URL must return a 2xx HTTP response code.
+      retries: undocumented
+      signing: none
+      signing_note: >-
+        No signature header, shared secret or timestamp is documented, so a receiver cannot
+        cryptographically verify that a callback originated from Kickbox. Treat the callback as an
+        untrusted notification and re-read job state from GET /v2/verify-batch/{id} before acting.
+    payload_fields:
+      - {name: id, type: integer, description: The batch job id}
+      - {name: name, type: string, description: Job name (settable at submission via X-Kickbox-Filename)}
+      - {name: download_url, type: string, description: Signed URL to the results CSV}
+      - {name: stats, type: object, description: Counts of deliverable, undeliverable, risky, unknown; aggregate sendex; total addresses}
+      - {name: created_at, type: string, format: date-time}
+      - {name: status, type: string, enum: [completed, failed]}
+      - {name: error, type: 'string|null', description: Description of the error when status is failed}
+      - {name: duration, type: integer, description: Job duration}
+    payload_example: |
+      {
+          "id": 123,
+          "name": "Batch API Process - 05-12-2018-01-58-08",
+          "download_url": "https://url.to.your.csv",
+          "stats": {
+            "deliverable": 2,
+            "undeliverable": 1,
+            "risky": 0,
+            "unknown": 0,
+            "sendex": 0.35,
+            "addresses": 3
+          },
+          "created_at": "2018-05-12T18:58:08.000Z",
+          "status": "completed",
+          "error": null,
+          "duration": 42
+      }
+    consumer_caveats:
+      - >-
+        download_url is valid for one hour. After it expires a fresh signed URL must be obtained via
+        GET /v2/verify-batch/{id}, so a consumer must either download promptly or re-poll.
+      - >-
+        The callback is optional. A consumer that does not set X-Kickbox-Callback must poll GET
+        /v2/verify-batch/{id}, which returns starting, processing, completed or failed.
+polling_alternative:
+  operation: openapi/kickbox-batch-api-openapi.yml#getBatchResults
+  statuses: [starting, processing, completed, failed]
+  progress_fields: [deliverable, undeliverable, risky, unknown, total, unprocessed]
+non_api_notifications:
+  - name: spike-detection-alert
+    channel: email
+    status: beta
+    docs: https://docs.kickbox.com/docs/spike-detection-alerts
+    note: >-
+      Customer-configured threshold alerts on verification volume per API key. Delivered by email to
+      the account, not as a webhook, so it is not an integrable event surface. Recorded for
+      completeness only.

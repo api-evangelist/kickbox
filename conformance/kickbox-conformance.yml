@@ -1,0 +1,107 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/ (all harvested specs), openapi/kickbox-disposable-openapi.json,
+  https://docs.kickbox.com/docs/using-the-api, https://docs.kickbox.com/docs/security-and-compliance
+summary: >-
+  Kickbox is a plain HTTPS/JSON REST API with API-key authentication. It asserts no industry API
+  standards and implements few cross-cutting ones. The published conformance posture is regulatory
+  (GDPR, CCPA, SOC 2 claimed) rather than technical, and that regulatory posture is captured in
+  security/kickbox-trust-center.yml.
+standards:
+  - id: openapi
+    conforms: true
+    evidence: >-
+      Kickbox publishes an OpenAPI 3.1.0 fragment for the open disposable endpoint on its own docs
+      host, saved verbatim at openapi/kickbox-disposable-openapi.json. The remaining operations are
+      described by API Evangelist specs derived from the first-party PHP SDK, not by a
+      provider-published document.
+    scope: partial
+  - id: rest
+    conforms: true
+    evidence: Resource-oriented HTTPS endpoints using GET and PUT with JSON responses.
+  - id: https-only
+    conforms: true
+    evidence: >-
+      "All calls made to the Kickbox API must be made using HTTPS." HSTS is served on kickbox.com,
+      docs.kickbox.com and api.kickbox.com.
+  - id: rfc6750-bearer
+    conforms: true
+    evidence: >-
+      Authorization header with the Bearer scheme is a documented, accepted authentication form.
+  - id: oauth2
+    conforms: false
+    evidence: No OAuth 2.0 surface; authentication is a static API key.
+  - id: oidc
+    conforms: false
+    evidence: >-
+      No OpenID Connect for the API. Okta SSO exists for dashboard sign-in only and is not an API
+      authentication mechanism.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors return a flat {"success": false, "message": "..."} envelope with content-type
+      application/json, not application/problem+json. No type URI, no machine-readable error code.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header support and no deprecation policy documented.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: >-
+      No /.well-known/security.txt on any Kickbox host (api, docs, www, app all 404).
+  - id: rfc8615-well-known
+    conforms: false
+    evidence: >-
+      No /.well-known/ discovery documents served. See well-known/kickbox-well-known.yml.
+  - id: rfc9110-rate-limit-headers
+    conforms: false
+    evidence: >-
+      No RateLimit-*, X-RateLimit-* or Retry-After headers. Limits are documented as static prose
+      numbers only.
+  - id: idempotency-key
+    conforms: false
+    evidence: >-
+      No idempotency key or de-duplication window documented. PUT /v2/verify-batch is not
+      retry-safe.
+  - id: pagination
+    conforms: false
+    evidence: >-
+      Not applicable — no collection endpoints exist. Recorded as non-conforming rather than N/A
+      because there is nothing to assess.
+  - id: webhooks
+    conforms: true
+    evidence: >-
+      Batch job completion POSTs a JSON payload to a caller-supplied X-Kickbox-Callback URL. No
+      signature or shared secret is documented, so the callback is unauthenticated to the receiver.
+    scope: partial
+  - id: asyncapi
+    conforms: false
+    evidence: No AsyncAPI document published; searched on docs, API host and the GitHub org.
+  - id: cors
+    conforms: false
+    evidence: >-
+      Verification endpoints explicitly do not allow cross-domain requests; the API cannot be called
+      from browser JavaScript.
+  - id: mcp
+    conforms: partial
+    evidence: >-
+      An MCP endpoint responds at https://docs.kickbox.com/mcp with JSON-RPC, but initialize and
+      tools/list both return -32001 "Authorization required" and no OAuth discovery metadata is
+      served, so conformance cannot be assessed beyond the transport answering.
+  - id: a2a
+    conforms: false
+    evidence: >-
+      No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any of the five
+      hosts probed.
+  - id: graphql
+    conforms: false
+    evidence: No GraphQL surface published.
+  - id: grpc
+    conforms: false
+    evidence: No .proto definitions in the github.com/kickboxio organization or on buf.build.
+regulatory:
+  note: >-
+    Published compliance posture lives in security/kickbox-trust-center.yml — GDPR, CCPA, a claimed
+    SOC 2 status, M3AAWG membership, and an EU data-residency option. That artifact carries the
+    Compliance pointer.
+  see_also: security/kickbox-trust-center.yml

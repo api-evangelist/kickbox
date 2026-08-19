@@ -1,0 +1,135 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/kickbox-verification-api-openapi.yml, openapi/kickbox-batch-api-openapi.yml,
+  openapi/kickbox-account-api-openapi.yml, openapi/kickbox-open-api-openapi.yml,
+  https://docs.kickbox.com/docs/single-verification-api,
+  https://docs.kickbox.com/docs/batch-verification-api
+summary: >-
+  A deliberately shallow model. Kickbox has no persistent, addressable customer-owned resources
+  beyond the batch job — a verification is a computation, not a stored entity, and the API returns
+  its result rather than a resource with an id. The only entity with an identifier and a lifecycle is
+  BatchJob. There are no $ref-linked schema graphs to walk, so the relationships below are derived
+  from the documented response payloads and the operations that produce them.
+entities:
+  - name: VerificationResult
+    description: >-
+      The outcome of verifying one email address. Returned inline by GET /v2/verify; not stored, not
+      addressable, has no id.
+    identifier: none
+    persisted: false
+    produced_by: [verifyEmail]
+    fields:
+      - {name: result, type: string, enum: [deliverable, undeliverable, risky, unknown]}
+      - {name: reason, type: string, note: See errors/kickbox-problem-types.yml result_reason_codes for the eleven values}
+      - {name: role, type: boolean, description: Address is a role address such as postmaster@ or support@}
+      - {name: free, type: boolean, description: Address uses a free provider such as gmail.com}
+      - {name: disposable, type: boolean, description: Address uses a disposable domain such as mailinator.com}
+      - {name: accept_all, type: boolean, description: Domain appears to accept all addresses}
+      - {name: did_you_mean, type: 'string|null', description: Suggested correction when a probable typo is detected}
+      - {name: sendex, type: number, range: '0..1', description: Kickbox Sendex quality score}
+      - {name: email, type: string, description: Normalized form of the submitted address}
+      - {name: user, type: string, description: Local part of the address}
+      - {name: domain, type: string, description: Domain part of the address}
+      - {name: success, type: boolean, description: Whether the API request succeeded (not the verification verdict)}
+      - {name: message, type: 'string|null'}
+  - name: BatchJob
+    description: >-
+      An asynchronous bulk verification job. The only entity in the API with an id, a status
+      lifecycle and a retrievable representation.
+    identifier: id
+    identifier_type: integer
+    persisted: true
+    produced_by: [verifyBatch]
+    read_by: [getBatchResults]
+    lifecycle:
+      states: [starting, processing, completed, failed]
+      terminal: [completed, failed]
+    fields:
+      - {name: id, type: integer}
+      - {name: name, type: string, description: Job name; settable at submission via the X-Kickbox-Filename header}
+      - {name: status, type: string, enum: [starting, processing, completed, failed]}
+      - {name: progress, type: object, present_when: 'status = processing'}
+      - {name: stats, type: object, present_when: 'status = completed'}
+      - {name: download_url, type: string, present_when: 'status = completed', note: Signed URL, valid one hour}
+      - {name: created_at, type: string, format: date-time}
+      - {name: duration, type: integer}
+      - {name: error, type: 'string|null', present_when: 'status = failed'}
+    constraints:
+      max_addresses: 1000000
+      max_payload_bytes: 262144000
+      max_payload_human: 250MB
+      input_content_type: text/csv
+  - name: BatchProgress
+    description: In-flight counters embedded in a BatchJob while status is processing.
+    identifier: none
+    persisted: false
+    fields:
+      - {name: deliverable, type: integer}
+      - {name: undeliverable, type: integer}
+      - {name: risky, type: integer}
+      - {name: unknown, type: integer}
+      - {name: total, type: integer}
+      - {name: unprocessed, type: integer}
+  - name: BatchStats
+    description: Final aggregate counters embedded in a completed BatchJob and in the completion callback.
+    identifier: none
+    persisted: false
+    fields:
+      - {name: deliverable, type: integer}
+      - {name: undeliverable, type: integer}
+      - {name: risky, type: integer}
+      - {name: unknown, type: integer}
+      - {name: sendex, type: number, description: Aggregate Sendex score across the list}
+      - {name: addresses, type: integer}
+  - name: AccountBalance
+    description: Remaining prepaid verification credits.
+    identifier: none
+    persisted: true
+    produced_by: [getBalance]
+    also_exposed_as: 'X-Kickbox-Balance response header on every authenticated call'
+  - name: DisposableCheck
+    description: Whether a domain or address belongs to a known disposable-email provider.
+    identifier: none
+    persisted: false
+    produced_by: [isDisposable]
+    unauthenticated: true
+    fields:
+      - {name: disposable, type: boolean}
+    source: openapi/kickbox-disposable-openapi.json
+  - name: ApiKey
+    description: >-
+      A credential with a mode (production or sandbox) and a set of permitted endpoints. Managed
+      exclusively in the dashboard — there is no API to create, list, rotate or revoke a key, so this
+      entity is not addressable through the API and is included for completeness of the domain.
+    identifier: key string
+    api_manageable: false
+    fields:
+      - {name: prefix, type: string, enum: [live_, test_]}
+      - {name: permissions, type: array, description: Endpoints the key may call}
+      - {name: mode, type: string, enum: [production, sandbox], immutable: true}
+relationships:
+  - {from: BatchJob, to: BatchProgress, kind: has_one, via: progress, note: Present only while status is processing}
+  - {from: BatchJob, to: BatchStats, kind: has_one, via: stats, note: Present only when status is completed}
+  - from: BatchJob
+    to: VerificationResult
+    kind: has_many
+    via: download_url
+    note: >-
+      Not a JSON relationship. The individual per-address results are delivered as rows in the signed
+      CSV at download_url, never as API resources, so this edge cannot be traversed programmatically
+      through the API.
+  - {from: ApiKey, to: AccountBalance, kind: belongs_to, via: account, note: Credits are held at account level, not per key}
+  - {from: ApiKey, to: BatchJob, kind: has_many, via: apikey, note: Jobs are created under the key that submitted them}
+notes:
+  - >-
+    There are no cross-entity id references in any response payload other than BatchJob.id. Nothing
+    in this API links to anything else by id, which is why the relationship set is so small.
+  - >-
+    The verification result carries no identifier at all, so results cannot be re-fetched, cached
+    server-side or referenced later. A caller that needs history must store results itself. The docs
+    reinforce this by advising callers to log the address as originally submitted, since the API
+    returns only a normalized form.
+id_prefixes: []
+id_prefixes_note: Kickbox uses no prefixed identifiers; the only id is a bare integer job id.
+subway: null

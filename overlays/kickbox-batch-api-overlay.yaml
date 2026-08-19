@@ -1,0 +1,83 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kickbox Batch API
+  version: 1.0.0
+extends: openapi/kickbox-batch-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: https://docs.kickbox.com + repo artifacts; never mutates the harvested spec
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-artifacts:
+    - conventions/kickbox-conventions.yml
+    - errors/kickbox-problem-types.yml
+    - authentication/kickbox-authentication.yml
+    - rate-limits/kickbox-rate-limits.yml
+    - sandbox/kickbox-sandbox.yml
+    - lifecycle/kickbox-lifecycle.yml
+    - data-model/kickbox-data-model.yml
+    - plans/kickbox-plans-pricing.yml
+- target: $.info
+  update:
+    x-response-envelope:
+      description: 'Every response carries success (boolean) and message (string|null) alongside the payload.
+        success describes the API call, NOT the verification verdict: an undeliverable address still returns
+        success: true.'
+      fields:
+      - success
+      - message
+      source: https://docs.kickbox.com/docs/single-verification-api
+- target: $.info
+  update:
+    x-rate-limits:
+      parallel_per_ip: 25
+      requests_per_clock_minute: 8000
+      status_on_exhaustion: 429
+      response_headers: []
+      note: No RateLimit-*, X-RateLimit-* or Retry-After headers are returned; limits must be enforced
+        client-side.
+      source: https://docs.kickbox.com/docs/using-the-api
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: No idempotency key documented. GET operations are naturally retry-safe; PUT /v2/verify-batch
+        is not — a retry creates a second job and consumes credits again.
+- target: $.servers
+  update:
+  - url: https://api.kickbox.com
+    description: Kickbox production API (global).
+  - url: https://api.eu.kickbox.com
+    description: Kickbox production API for EU-only accounts (app.eu.kickbox.com). Documented at https://docs.kickbox.com/docs/using-the-api;
+      selected by account type, not by parameter.
+- target: $.paths['/v2/verify-batch'].put
+  update:
+    x-request-content-type: text/csv
+    x-limits:
+      max_addresses: 1000000
+      max_payload: 250MB
+    x-webhook:
+      header: X-Kickbox-Callback
+      method: POST
+      signed: false
+      note: Completion callback POSTed to the caller-supplied URL. Unsigned — confirm state via getBatchResults
+        before acting.
+      artifact: asyncapi/kickbox-batch-webhooks.yml
+    x-optional-headers:
+    - name: X-Kickbox-Filename
+      description: Names the job and the downloaded file.
+    x-idempotency:
+      supported: false
+      note: A retried submission creates a second job and consumes credits twice.
+- target: $.paths['/v2/verify-batch/{id}'].get
+  update:
+    x-job-statuses:
+    - starting
+    - processing
+    - completed
+    - failed
+    x-download-url-ttl: 1 hour
+    x-download-url-note: download_url is a signed URL valid for one hour; re-call this operation to mint
+      a fresh one.

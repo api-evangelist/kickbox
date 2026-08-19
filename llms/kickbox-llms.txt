@@ -1,0 +1,57 @@
+# Kickbox Email Verification Documentation
+
+> Integrate Kickbox directly into your applications with our Email Verification APIs. Get a head start with the Kickbox API libraries for Node.js, PHP, Python, and Ruby.
+
+## Guides
+- [Understanding Results](https://docs.kickbox.com/docs/terminology.md)
+- [Security and Privacy](https://docs.kickbox.com/docs/list-security-and-privacy.md)
+- [Sendex™ Email Quality](https://docs.kickbox.com/docs/the-sendex.md)
+- [Downloading and Exporting Results](https://docs.kickbox.com/docs/downloading-and-exporting-results.md)
+- [Intro to the API + Docs](https://docs.kickbox.com/docs/api-overview-copy.md): Learn about the overall functionality of the Kickbox API and what you can learn from each help doc in the Email Verification API category.
+- [API Quickstart](https://docs.kickbox.com/docs/using-the-api.md): Get started in minutes with this quickstart guide.
+- [Sandbox Mode](https://docs.kickbox.com/docs/sandbox-api.md): Test the email verification API without using credits.
+- [Single Verification API](https://docs.kickbox.com/docs/single-verification-api.md): The single-email verification API is ideal for verifying email addresses at the point-of-capture. It returns a json response denoting multiple aspects of the  email address's quality, including a “did_you_mean” response for typos. The verification API allows users the ability to tag/flag addresses as they enter the database, or reject them outright.
+- [API Libraries](https://docs.kickbox.com/docs/kickbox-api-libraries.md): Easily add email verification functionality to your application with our official and 3rd party client SDKs.
+- [Python: How To Validate An Email Address](https://docs.kickbox.com/docs/python-validate-an-email-address.md): How to validate the syntax, validity, and quality of an email address in Python. Works in Django, Bottles, Jupyter, and more.
+- [Spike Detection Alerts](https://docs.kickbox.com/docs/spike-detection-alerts.md): Set up a spike detection alert on one of your Kickbox API keys.
+- [Getting Started as an Enterprise Customer](https://docs.kickbox.com/docs/getting-started-as-an-enterprise-customer.md)
+- [Security and Compliance](https://docs.kickbox.com/docs/security-and-compliance.md): Learn more about Kickbox's comprehensive compliance with data security standards.
+- [Enterprise Features](https://docs.kickbox.com/docs/enterprise-features.md): Learn more about Kickbox features for Enterprise accounts.
+- [Integrations](https://docs.kickbox.com/docs/kickbox-integrations.md): Connect Kickbox email verification with tools you use every day.
+- [Integrating with Act-On via Zapier](https://docs.kickbox.com/docs/integrating-with-act-on-via-zapier.md)
+- [Integrating with ActiveCampaign via Zapier](https://docs.kickbox.com/docs/integrating-with-activecampaign-via-zapier.md): Learn how to set up automated verification workflows via Zapier.
+- [Integrating with AWeber](https://docs.kickbox.com/docs/integrating-with-aweber.md): Improve AWeber broadcast deliverability by using Kickbox email verification to identify the underliverable and low-quality email addresses in your AWeber lists.
+- [Integrating with Benchmark](https://docs.kickbox.com/docs/integration-with-benchmark.md): Improve the quality of your Benchmark email lists with Kickbox email verification. Better quality email data means better deliverability and improved performance.
+- [Integrating with Braze](https://docs.kickbox.com/docs/integrating-with-braze.md): Improve the deliverability of your Braze campaigns by using Kickbox email verification. Identify undeliverable and low quality email addresses before you hit send.
+- [Integrating with Brevo](https://docs.kickbox.com/docs/integrating-with-brevo.md): Improve the deliverability of your Brevo campaigns by using Kickbox email verification. Identify undeliverable and low quality email addresses before you hit send.
+- [Integrating with Campaign Monitor](https://docs.kickbox.com/docs/integrating-with-campaign-monitor.md): Improve campaign deliverability and inbox placement by using the Kickbox email verifier to identify undeliverable and low quality email addresses in your Campaign Monitor lists.
+- [Integrating with Constant Contact](https://docs.kickbox.com/docs/integrating-with-constant-contact.md): Improve the deliverability of your Constant Contact campaigns by using Kickbox email verification to identify undeliverable and low quality email addresses.
+- [Integrating with Cordial](https://docs.kickbox.com/docs/integrating-with-cordial.md): Improve campaign performance, drive segmentation decisions, and maintain high quality data by using Kickbox email verification to identify undeliverable and low quality emails in your Cordial lists.
+- [Integrating with Dotdigital](https://docs.kickbox.com/docs/integrating-with-dotdigital.md): Kickbox email verification helps Dotdigital customers improve deliverability of emails, enhance engagement, and increase conversions.
+- [Integrating with Drip via Zapier](https://docs.kickbox.com/docs/integrating-with-drip-via-zapier.md): Learn how to set up automated verification workflows via Zapier.
+- [Integrating with GetResponse](https://docs.kickbox.com/docs/integrating-with-getresponse.md): Kickbox email verification ensures you only send email to real users and helps you separate the low-quality addresses from high-value contacts in your GetResponse email lists.
+- [Integrating with Gravity Forms via Gravity Wiz](https://docs.kickbox.com/docs/integrating-with-gravity-forms.md): Learn how to add Kickbox email validation into your Gravity Forms process via our partners at Gravity Wiz.
+- [Integrating with HighLevel](https://docs.kickbox.com/docs/integrating-with-go-highlevel.md)
+- [Integrating with HubSpot](https://docs.kickbox.com/docs/integrating-with-hubspot.md): Quickly verify your HubSpot email lists to uncover the health of your email  lists before you hit send.
+- [Integrating with iContact](https://docs.kickbox.com/docs/integrating-with-icontact.md): Learn how to connect and verify your iContact email lists.
+- [Integrating with Iterable](https://docs.kickbox.com/docs/integrating-with-iterable.md): Quickly verify your Iterable email lists to determine the good, the bad and the ugly email addresses on your list, before you hit send.
+- [Integrating with Klaviyo](https://docs.kickbox.com/docs/integrating-with-klaviyo.md): Improve the deliverability of your Klaviyo campaigns by using Kickbox email verification. Identify undeliverable and low quality email addresses before you hit send.
+- [Integrating with Mailerlite via Zapier](https://docs.kickbox.com/docs/integrating-with-mailerlite-via-zapier.md): Learn how to set up automated Kickbox verification workflows via Zapier.
+- [Integrating with Marketo](https://docs.kickbox.com/docs/integrating-with-marketo.md): Use Kickbox email verification to identify the underliverable and low quality email addresses in your Marketo lists, before you hit send.
+- [Integrating with Salesforce](https://docs.kickbox.com/docs/integrating-with-salesforce.md): Use Kickbox email verification to verify contact's emails in your Salesforce account.
+- [Integrating with SendGrid](https://docs.kickbox.com/docs/integration-with-sendgrid.md): Use Kickbox email verification to identify the underliverable and low quality email addresses in your SendGrid lists, before you hit send.
+- [Integrating with Sendloop](https://docs.kickbox.com/docs/integrating-with-sendloop.md): Use Kickbox email verification to identify the underliverable and low quality email addresses in your Sendloop lists, before you hit send.
+- [Integrating with VerticalResponse via Zapier](https://docs.kickbox.com/docs/integrating-with-verticalresponse-via-zapier.md): Learn how to set up automated verification workflows for your VerticalResponse account via Zapier.
+- [Integrating with Yotpo](https://docs.kickbox.com/docs/integrating-with-yotpo.md): Improve the deliverability of your Yotpo campaigns by using Kickbox email verification to identify undeliverable and low quality email addresses.
+- [Integrating with Zapier](https://docs.kickbox.com/docs/integrating-with-zapier.md): Learn how to create a custom automated email verification workflousing Zapier.
+- [Integration with Typeform via Zapier](https://docs.kickbox.com/docs/integration-with-typeform-via-zapier.md): Automatically verify email addresses submitted through Typeform using Kickbox. Identify undeliverable and risky email addresses before they enter your CRM or email platform.
+- [Authentication Methods](https://docs.kickbox.com/docs/authentication-methods.md): Learn how to sign in using Google, 2FA, or Okta.
+- [Single Sign-on with Okta](https://docs.kickbox.com/docs/okta-authentication.md): How to setup Okta sign in for your organization
+- [Kickbox Privacy Policy](https://docs.kickbox.com/docs/privacy-policy.md)
+- [Subprocessors](https://docs.kickbox.com/docs/subprocessors.md)
+- [Account Management](https://docs.kickbox.com/docs/account-management.md): Learn how to manage your Kickbox account(s) more efficiently by adding and managing users to your account, and if necessary using a Parent Account to consolidate management and visibility across multiple accounts.
+- [Parent Accounts](https://docs.kickbox.com/docs/parent-accounts.md): How to use parent accounts to see email data quality across multiple business units, brands, or clients.
+- [Adding Users to Your Account](https://docs.kickbox.com/docs/adding-users-to-your-account.md): How to add and manage users on your Kickbox account.
+
+## API Reference
+- [Disposable Email Check](https://docs.kickbox.com/reference/disposable-email-check.md): A free, open endpoint for checking if an email is hosted by known disposable domains.

@@ -1,0 +1,205 @@
+{
+  "item": [
+    {
+      "id": "9d679b14-2224-46bd-90c9-d93e00e3af8d",
+      "name": "Verification",
+      "description": {
+        "content": "Real-time email verification.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc21dc96-7ac1-414a-9ada-4d3c71cc031d",
+          "name": "Verify a single email address",
+          "request": {
+            "name": "Verify a single email address",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "(Required) The email address to verify."
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "6000",
+                  "description": "Verification timeout in milliseconds."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a6df43b-3e87-46eb-9163-75d728430c00",
+              "name": "Verification result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "6000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Remaining verification credits.",
+                  "key": "X-Kickbox-Balance",
+                  "value": "7407"
+                },
+                {
+                  "disabled": false,
+                  "description": "Backend processing time in milliseconds.",
+                  "key": "X-Kickbox-Response-Time",
+                  "value": "7407"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"risky\",\n  \"reason\": \"string\",\n  \"role\": true,\n  \"free\": false,\n  \"disposable\": true,\n  \"accept_all\": false,\n  \"did_you_mean\": \"string\",\n  \"sendex\": 0.20059805359924532,\n  \"email\": \"string\",\n  \"user\": \"string\",\n  \"domain\": \"string\",\n  \"success\": true,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fed6413-25d4-4666-8e4d-c115ba7e963e",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "6000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kickbox.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b6007589-c6b9-4cb5-aa69-19126d50116d",
+    "name": "Kickbox Email Account Verification API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for verifying the deliverability of email addresses with Kickbox.\nEndpoint paths and authentication are derived from the official Kickbox PHP\nSDK at https://github.com/kickboxio/kickbox-php (see HttpClient.php and\nApi/Kickbox.php), which is the canonical client for the production API.\n\n\nContact Support:\n Name: Kickbox\n Email: help@kickbox.com",
+      "type": "text/plain"
+    }
+  }
+}

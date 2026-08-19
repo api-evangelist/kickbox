@@ -1,16 +1,108 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/kickbox-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/using-the-api
+docs:
+  - https://docs.kickbox.com/docs/using-the-api
+  - https://docs.kickbox.com/docs/single-verification-api
+upgraded_from: derived
+upgraded_note: >-
+  The previous derived profile read only the harvested OpenAPI, which declares a single `TokenAuth`
+  http/bearer scheme described as `Authorization: token YOUR_API_KEY`. The provider's own
+  documentation shows two accepted forms and names the Bearer scheme explicitly, so the spec was
+  thin and slightly wrong. This searched profile records what the docs publish; the spec's scheme is
+  retained below under spec_schemes for traceability.
 summary:
-  types:
-  - http
+  types: [apiKey, http]
+  api_key_in: [query, header]
+  oauth2_flows: []
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+model: >-
+  A single long-lived API key per credential, created and scoped in the Kickbox dashboard. There is
+  no OAuth, no OIDC, no token exchange and no refresh — an agent holds a static secret. The key is
+  accepted either as a query-string parameter or as an Authorization Bearer header; the query form is
+  the one used throughout the documentation and by all four first-party SDKs.
 schemes:
-- name: TokenAuth
-  type: http
-  scheme: bearer
-  bearerFormat: token
-  description: |-
-    Kickbox API key sent in the Authorization header in the form
-    `Authorization: token YOUR_API_KEY`.
-  sources:
-  - openapi/kickbox-openapi.yml
+  - name: apikey-query
+    type: apiKey
+    in: query
+    parameter_name: apikey
+    required: true
+    description: >-
+      The API key supplied as the `apikey` query-string parameter. This is the canonical form in the
+      Kickbox documentation and the form every first-party SDK emits.
+    example: 'GET https://api.kickbox.com/v2/verify?email=user%40example.com&apikey=YOUR_API_KEY'
+    caution: >-
+      A key in a query string is logged by proxies, browser history and server access logs. Prefer
+      the Authorization header form where the client allows it.
+    sources: [https://docs.kickbox.com/docs/using-the-api]
+  - name: bearer-header
+    type: http
+    scheme: bearer
+    in: header
+    header: Authorization
+    description: >-
+      The API key supplied as the access token of an Authorization header using the Bearer scheme.
+    example: 'Authorization: Bearer YOUR_API_KEY'
+    sources: [https://docs.kickbox.com/docs/using-the-api]
+spec_schemes:
+  - name: TokenAuth
+    type: http
+    scheme: bearer
+    bearerFormat: token
+    sources:
+      - openapi/kickbox-account-api-openapi.yml
+      - openapi/kickbox-batch-api-openapi.yml
+      - openapi/kickbox-open-api-openapi.yml
+      - openapi/kickbox-verification-api-openapi.yml
+credentials:
+  issuance:
+    where: Kickbox dashboard, API > Manage Keys
+    url: https://app.kickbox.com/signup
+    self_serve: true
+  key_prefixes:
+    live: live_
+    test: test_
+    note: >-
+      The prefix is how a holder can tell a production key from a sandbox key by inspection.
+      Production keys start with `live_`, sandbox keys start with `test_`.
+  modes:
+    - {mode: production, prefix: live_, consumes_credits: true}
+    - {mode: sandbox, prefix: test_, consumes_credits: false}
+  mode_immutable: true
+  mode_immutable_note: >-
+    A key's mode is fixed at creation. The docs state you cannot switch a key between sandbox and
+    production mode; a new key must be created instead.
+  scoping:
+    style: per-key endpoint permissions
+    note: >-
+      Each key is granted permission to specific API endpoints at creation, and permissions are
+      editable afterwards. This is the closest thing Kickbox has to OAuth scopes, but it is
+      dashboard-configured rather than declared in a token, so there is no scope string an agent can
+      request or inspect. No scopes/ artifact is emitted for this provider.
+  rotation: undocumented
+  expiry: none documented
+  revocation:
+    note: >-
+      A key can be effectively disabled by editing it and unchecking all Verify permissions, which
+      the docs present as the pause/shut-off mechanism.
+unauthenticated_surface:
+  - operation: isDisposable
+    endpoint: GET /v1/disposable/{email}
+    host: https://open.kickbox.com
+    note: >-
+      The open disposable-domain lookup requires no authentication. Kickbox's own published OpenAPI
+      for it declares `"security": [{}]`, i.e. explicitly optional/no security.
+    source: openapi/kickbox-disposable-openapi.json
+account_authentication:
+  note: Dashboard/console sign-in, distinct from API authentication.
+  methods: [password, Sign in with Google, two-factor authentication, Okta SSO]
+  docs:
+    - https://docs.kickbox.com/docs/authentication-methods
+    - https://docs.kickbox.com/docs/okta-authentication
+regional:
+  note: >-
+    EU-only accounts authenticate against api.eu.kickbox.com rather than api.kickbox.com. The host is
+    a property of the account, not a parameter, so credentials are not portable between the two.
+  hosts: [https://api.kickbox.com, https://api.eu.kickbox.com]

@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kickbox Email Verification Account API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the account verification balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v2/balance"
+          },
+          "docs": "Get the account verification balance"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

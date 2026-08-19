@@ -1,0 +1,141 @@
+{
+  "item": [
+    {
+      "id": "32258a06-9ebf-4697-b48e-f95e8e1d691d",
+      "name": "Open",
+      "description": {
+        "content": "Free disposable-domain lookup (no auth).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc3658e3-87fe-451f-a6ec-2d3c920aef67",
+          "name": "Check if a domain is a known disposable email provider",
+          "request": {
+            "name": "Check if a domain is a known disposable email provider",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "disposable",
+                ":email"
+              ],
+              "host": [
+                "{{v1-disposable-email-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bd7eed43-d099-46ed-811f-9700162d56f0",
+              "name": "Disposable lookup result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "disposable",
+                    ":email"
+                  ],
+                  "host": [
+                    "{{v1-disposable-email-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"disposable\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kickbox.com",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://open.kickbox.io",
+      "key": "v1-disposable-email-Url"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6b00c0c6-efab-4650-b1ad-7e5289efc23e",
+    "name": "Kickbox Email Verification Account Open API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for verifying the deliverability of email addresses with Kickbox.\nEndpoint paths and authentication are derived from the official Kickbox PHP\nSDK at https://github.com/kickboxio/kickbox-php (see HttpClient.php and\nApi/Kickbox.php), which is the canonical client for the production API.\n\n\nContact Support:\n Name: Kickbox\n Email: help@kickbox.com",
+      "type": "text/plain"
+    }
+  }
+}

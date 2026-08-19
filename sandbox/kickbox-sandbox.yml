@@ -1,0 +1,132 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/sandbox-api
+docs:
+  - https://docs.kickbox.com/docs/sandbox-api
+  - https://docs.kickbox.com/docs/using-the-api
+summary: >-
+  Kickbox ships a genuine sandbox: API keys are created in either Production Mode or Sandbox Mode,
+  the mode is fixed at creation and cannot be switched afterwards, and Sandbox-mode calls return
+  mock verification results without deducting verification credits. The desired outcome is selected
+  by the shape of the address being verified rather than by a request parameter, so no fixture or
+  trigger API is needed. All sandbox results are fake by the provider's own explicit statement.
+key_separation:
+  style: key-prefix
+  live_prefix: live_
+  test_prefix: test_
+  note: >-
+    Production keys begin with `live_` and sandbox keys begin with `test_`. A key's mode is chosen at
+    creation time and is permanent — the docs state you cannot switch a key between sandbox and
+    production mode.
+default_behaviour: >-
+  Any address not matching a magic pattern returns result "deliverable" when called with a sandbox
+  key.
+magic_values:
+  style: local-part pattern
+  patterns:
+    - form: '<trigger>@*'
+    - form: '*+<trigger>@*'
+  note: >-
+    Both the bare local-part form and the plus-tag form are accepted, so an existing address can be
+    turned into a trigger without changing its domain.
+  triggers:
+    - trigger: deliverable
+      example: deliverable@example.com
+      result: deliverable
+      reason: accepted_email
+      sendex: 1
+    - trigger: rejected-email
+      example: rejected-email@example.com
+      result: undeliverable
+      reason: rejected_email
+      sendex: 0
+    - trigger: invalid-domain
+      example: invalid-domain@example.com
+      result: undeliverable
+      reason: invalid_domain
+      sendex: 0
+    - trigger: invalid-email
+      example: invalid-email@example.com
+      result: undeliverable
+      reason: invalid_email
+      sendex: 0
+    - trigger: invalid-smtp
+      example: invalid-smtp@example.com
+      result: undeliverable
+      reason: invalid_smtp
+      sendex: 0
+    - trigger: low-quality
+      example: low-quality@example.com
+      result: risky
+      reason: low_quality
+      sendex: 0.5
+      flags: {free: true}
+    - trigger: accept-all
+      example: accept-all@example.com
+      result: risky
+      reason: low_deliverability
+      sendex: 0.7
+      flags: {accept_all: true}
+    - trigger: role
+      example: role@example.com
+      result: risky
+      reason: low_quality
+      sendex: 0.7
+      flags: {role: true}
+    - trigger: disposable
+      example: disposable@example.com
+      result: risky
+      reason: low_quality
+      sendex: 0
+      flags: {disposable: true, accept_all: true}
+    - trigger: timeout
+      example: timeout@example.com
+      result: unknown
+      reason: timeout
+      sendex: 0
+    - trigger: unexpected-error
+      example: unexpected-error@example.com
+      result: unknown
+      reason: unexpected_error
+      sendex: 0
+    - trigger: no-connect
+      example: no-connect@example.com
+      result: unknown
+      reason: no_connect
+      sendex: 0
+    - trigger: unavailable-smtp
+      example: unavailable-smtp@example.com
+      result: unknown
+      reason: unavailable_smtp
+      sendex: 0
+    - trigger: insufficient-balance
+      example: insufficient-balance@example.com
+      result: null
+      http_status: 403
+      response: '{"success": false, "message": "Insufficient balance"}'
+      note: >-
+        The only trigger that simulates a transport-level failure rather than a verification result.
+        Simulates calling the API with zero verification credits remaining.
+    - trigger: did-you-mean
+      example: did-you-mean@example.com
+      result: undeliverable
+      returns_field: did_you_mean
+      status: beta
+      note: >-
+        Marked new/beta in the docs. In sandbox mode this always produces an Undeliverable address
+        carrying a did_you_mean value.
+test_clock: null
+fixtures: null
+console:
+  url: https://app.kickbox.com/signup
+  note: >-
+    API keys, their permitted endpoints, and their sandbox/production mode are managed from the
+    Kickbox dashboard under API > Manage Keys. A key can be effectively paused by unchecking all
+    Verify permissions.
+caveats:
+  - >-
+    The provider states plainly that Sandbox Mode results are not real and exist only to let an
+    integration exercise every response shape.
+  - >-
+    Sandbox Mode covers the verification endpoints; the docs do not describe sandbox behaviour for
+    the batch or balance endpoints.

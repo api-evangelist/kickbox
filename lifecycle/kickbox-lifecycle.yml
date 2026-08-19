@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/security-and-compliance
+docs:
+  - https://docs.kickbox.com/docs/security-and-compliance
+  - https://docs.kickbox.com/docs/using-the-api
+versioning:
+  scheme: uri-path
+  current: v2
+  lines:
+    - {line: v2, hosts: [api.kickbox.com, api.eu.kickbox.com], covers: [verification, batch, account]}
+    - {line: v1, hosts: [open.kickbox.com, open.kickbox.io], covers: [open disposable-domain lookup]}
+  note: >-
+    Two independent version lines. The docs URL structure also carries a legacy /v2.0/ prefix
+    (kickbox.com/terms redirects to docs.kickbox.com/v2.0/docs/terms-of-service), indicating the
+    documentation site is versioned alongside the API. No v1 sunset notice for the authenticated API
+    was found.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no versioning/migration policy and no RFC 8594 Sunset or Deprecation
+    header support are documented anywhere on the docs host. No Deprecation pointer is emitted in
+    apis.yml — this is a recorded absence.
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in any harvested OpenAPI carries deprecated: true, and the provider's own published
+  disposable-endpoint spec sets "deprecated": false explicitly.
+sla:
+  uptime_target: '99.9%'
+  scope: enterprise customers
+  url: https://docs.kickbox.com/docs/security-and-compliance
+  note: >-
+    "When you use the Kickbox API as an enterprise customer, you receive a guaranteed uptime SLA of
+    99.9%." The guarantee is qualified to enterprise accounts; no SLA is published for self-serve
+    accounts.
+status_page:
+  url: https://status.kickbox.com/
+  platform: Atlassian Statuspage
+  http_status: 200
+  verified: '2026-08-13'
+changelog:
+  published: false
+  note: >-
+    No dated changelog or release-notes page was found. kickbox.com/changelog,
+    docs.kickbox.com/changelog and docs.kickbox.com/docs/changelog all return 404, and llms.txt — the
+    provider's own complete documentation index — lists no changelog page. Product announcements
+    appear as marketing posts on blog.kickbox.com rather than as a versioned API changelog. No
+    changelog/ artifact and no ChangeLog pointer are emitted.
+  evidence:
+    - {url: 'https://kickbox.com/changelog', status: 404}
+    - {url: 'https://docs.kickbox.com/changelog', status: 404}
+    - {url: 'https://docs.kickbox.com/docs/changelog', status: 404}
+roadmap:
+  published: false
+  evidence:
+    - {url: 'https://kickbox.com/roadmap', status: 404}
+sdk_currency:
+  note: >-
+    A lifecycle signal worth reading next to the API's own stability: all four first-party SDKs are
+    materially behind the documented API. Node.js last published 2018-03-21, Python 2020-08-24, Ruby
+    2021-01-11, PHP 2023-03-10. See packages/kickbox-packages.yml.
+beta_features:
+  - {name: did_you_mean sandbox trigger, docs: 'https://docs.kickbox.com/docs/sandbox-api'}
+  - {name: Spike Detection Alerts, docs: 'https://docs.kickbox.com/docs/spike-detection-alerts', access: request beta access}

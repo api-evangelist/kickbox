@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/using-the-api
+docs:
+  - https://docs.kickbox.com/docs/using-the-api
+  - https://docs.kickbox.com/docs/single-verification-api
+  - https://docs.kickbox.com/docs/batch-verification-api
+summary: >-
+  A small, old-fashioned REST surface. Everything is HTTPS; authentication is an API key passed
+  either as an `apikey` query parameter or as an Authorization Bearer token; responses are a flat
+  JSON object with `success` and `message` alongside the payload. There is no idempotency contract,
+  no pagination (no collection endpoints), no field expansion, no request-id tracing header and no
+  standard rate-limit headers. Versioning is in the URI path.
+transport:
+  https_required: true
+  note: All calls made to the Kickbox API must be made using HTTPS.
+  cors:
+    allowed: false
+    note: >-
+      Verification endpoints do not allow cross-domain requests, so the API cannot be called directly
+      from browser JavaScript (React/Vue/Angular). Calls must be proxied server-side. This is an
+      explicit design decision documented by the provider, and it is load-bearing for any agent or
+      front-end integration plan.
+authentication:
+  styles:
+    - style: query-parameter
+      name: apikey
+      example: 'GET https://api.kickbox.com/v2/verify?email=...&apikey=YOUR_API_KEY'
+      note: The form used throughout the docs and by all four first-party SDKs.
+    - style: http-bearer
+      header: Authorization
+      scheme: Bearer
+      example: 'Authorization: Bearer YOUR_API_KEY'
+  key_prefixes: {live: live_, test: test_}
+  per_key_permissions: true
+  per_key_permissions_note: >-
+    An API key is scoped at creation to the specific endpoints it may call, and permissions can be
+    edited afterwards. Unchecking all Verify permissions effectively disables the key.
+  see_also: authentication/kickbox-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Kickbox documents no idempotency key, no request de-duplication window and no retry-safety
+    contract. This is a real gap rather than an undocumented feature: the single-verification and
+    balance endpoints are GETs and therefore naturally safe to retry, but PUT /v2/verify-batch has no
+    idempotency mechanism, so a retried batch submission creates a second job and consumes credits
+    twice. No Idempotency pointer is emitted in apis.yml.
+pagination:
+  supported: false
+  note: >-
+    The API exposes no collection endpoints — verification is one address per call, and batch results
+    are delivered as a single signed CSV download rather than a paged resource. There is nothing to
+    paginate.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+  note: >-
+    No arbitrary metadata field. The batch API offers one labelling affordance: the
+    X-Kickbox-Filename request header names the job and the resulting download file.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header is documented on either the request or the response side. The
+    only per-request diagnostic returned is X-Kickbox-Response-Time (processing time in ms).
+versioning:
+  scheme: uri-path
+  current:
+    verification_batch_account: v2
+    open_disposable: v1
+  note: >-
+    Two independent version lines on two hosts. See lifecycle/kickbox-lifecycle.yml.
+  see_also: lifecycle/kickbox-lifecycle.yml
+regional_routing:
+  supported: true
+  note: >-
+    EU-only accounts (which sign in at app.eu.kickbox.com rather than app.kickbox.com) must direct
+    API calls to api.eu.kickbox.com instead of api.kickbox.com. The host is determined by the account
+    type, not by a header or parameter, so a client cannot discover it at runtime and must be
+    configured for it.
+  hosts: {global: https://api.kickbox.com, eu: https://api.eu.kickbox.com}
+request_bodies:
+  json:
+    note: >-
+      Whenever a request body is required it must be JSON with Content-Type application/json; a
+      mismatch returns HTTP 415.
+  csv:
+    note: >-
+      PUT /v2/verify-batch is the exception and takes Content-Type text/csv — one address per line,
+      up to 1,000,000 addresses and under 250MB. The docs specify comma separators, double-quoted
+      values, backslash-escaped internal double quotes and newline row separators.
+response_envelope:
+  shape: flat
+  always_present: [success, message]
+  note: >-
+    `success` describes the API call, not the verification outcome — an address that is undeliverable
+    still returns success: true. Agents that treat `success` as the verification verdict will be
+    wrong on every negative result. This is the single most important convention on this API.
+  see_also: errors/kickbox-problem-types.yml
+response_headers:
+  - {name: X-Kickbox-Balance, description: Remaining verification credit balance}
+  - {name: X-Kickbox-Response-Time, description: Elapsed processing time in milliseconds}
+rate_limit_signalling:
+  standard_headers: false
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After headers. Limits (25 parallel per IP, 8,000 per clock
+    minute) are documented as static numbers only and must be enforced client-side.
+  see_also: rate-limits/kickbox-rate-limits.yml
+normalization:
+  note: >-
+    The API returns a normalized `email` (for example BoB@example.com becomes bob@example.com) along
+    with its `user` and `domain` parts. The docs advise logging the address as originally submitted,
+    since the normalized form is a functional equivalent rather than the literal input.
+webhooks:
+  supported: true
+  see_also: asyncapi/kickbox-batch-webhooks.yml

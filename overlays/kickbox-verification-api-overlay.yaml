@@ -1,0 +1,98 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kickbox Email Verification API
+  version: 1.0.0
+extends: openapi/kickbox-verification-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: https://docs.kickbox.com + repo artifacts; never mutates the harvested spec
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-artifacts:
+    - conventions/kickbox-conventions.yml
+    - errors/kickbox-problem-types.yml
+    - authentication/kickbox-authentication.yml
+    - rate-limits/kickbox-rate-limits.yml
+    - sandbox/kickbox-sandbox.yml
+    - lifecycle/kickbox-lifecycle.yml
+    - data-model/kickbox-data-model.yml
+    - plans/kickbox-plans-pricing.yml
+- target: $.info
+  update:
+    x-response-envelope:
+      description: 'Every response carries success (boolean) and message (string|null) alongside the payload.
+        success describes the API call, NOT the verification verdict: an undeliverable address still returns
+        success: true.'
+      fields:
+      - success
+      - message
+      source: https://docs.kickbox.com/docs/single-verification-api
+- target: $.info
+  update:
+    x-rate-limits:
+      parallel_per_ip: 25
+      requests_per_clock_minute: 8000
+      status_on_exhaustion: 429
+      response_headers: []
+      note: No RateLimit-*, X-RateLimit-* or Retry-After headers are returned; limits must be enforced
+        client-side.
+      source: https://docs.kickbox.com/docs/using-the-api
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: No idempotency key documented. GET operations are naturally retry-safe; PUT /v2/verify-batch
+        is not — a retry creates a second job and consumes credits again.
+- target: $.servers
+  update:
+  - url: https://api.kickbox.com
+    description: Kickbox production API (global).
+  - url: https://api.eu.kickbox.com
+    description: Kickbox production API for EU-only accounts (app.eu.kickbox.com). Documented at https://docs.kickbox.com/docs/using-the-api;
+      selected by account type, not by parameter.
+- target: $.paths['/v2/verify'].get
+  update:
+    x-sandbox-triggers:
+      style: local-part pattern
+      forms:
+      - <trigger>@domain
+      - anything+<trigger>@domain
+      triggers:
+      - deliverable
+      - rejected-email
+      - invalid-domain
+      - invalid-email
+      - invalid-smtp
+      - low-quality
+      - accept-all
+      - role
+      - disposable
+      - timeout
+      - unexpected-error
+      - no-connect
+      - unavailable-smtp
+      - insufficient-balance
+      - did-you-mean
+      source: https://docs.kickbox.com/docs/sandbox-api
+    x-result-reasons:
+    - invalid_email
+    - invalid_domain
+    - rejected_email
+    - accepted_email
+    - low_quality
+    - low_deliverability
+    - no_connect
+    - timeout
+    - invalid_smtp
+    - unavailable_smtp
+    - unexpected_error
+    x-response-headers:
+    - name: X-Kickbox-Balance
+      description: Remaining verification credit balance.
+    - name: X-Kickbox-Response-Time
+      description: Elapsed processing time in milliseconds.
+    x-cors:
+      allowed: false
+      note: Verification endpoints do not allow cross-domain requests; cannot be called from browser JavaScript.

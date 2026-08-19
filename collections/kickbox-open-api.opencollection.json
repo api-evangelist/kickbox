@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kickbox Email Verification Account Open API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Open",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check if a domain is a known disposable email provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v1/disposable/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Check if a domain is a known disposable email provider"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

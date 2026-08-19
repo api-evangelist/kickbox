@@ -1,0 +1,64 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kickbox Open API
+  version: 1.0.0
+extends: openapi/kickbox-open-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: https://docs.kickbox.com + repo artifacts; never mutates the harvested spec
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-artifacts:
+    - conventions/kickbox-conventions.yml
+    - errors/kickbox-problem-types.yml
+    - authentication/kickbox-authentication.yml
+    - rate-limits/kickbox-rate-limits.yml
+    - sandbox/kickbox-sandbox.yml
+    - lifecycle/kickbox-lifecycle.yml
+    - data-model/kickbox-data-model.yml
+    - plans/kickbox-plans-pricing.yml
+- target: $.info
+  update:
+    x-response-envelope:
+      description: 'Every response carries success (boolean) and message (string|null) alongside the payload.
+        success describes the API call, NOT the verification verdict: an undeliverable address still returns
+        success: true.'
+      fields:
+      - success
+      - message
+      source: https://docs.kickbox.com/docs/single-verification-api
+- target: $.info
+  update:
+    x-rate-limits:
+      parallel_per_ip: 25
+      requests_per_clock_minute: 8000
+      status_on_exhaustion: 429
+      response_headers: []
+      note: No RateLimit-*, X-RateLimit-* or Retry-After headers are returned; limits must be enforced
+        client-side.
+      source: https://docs.kickbox.com/docs/using-the-api
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: No idempotency key documented. GET operations are naturally retry-safe; PUT /v2/verify-batch
+        is not — a retry creates a second job and consumes credits again.
+- target: $.servers
+  update:
+  - url: https://api.kickbox.com
+    description: Kickbox production API (global).
+  - url: https://api.eu.kickbox.com
+    description: Kickbox production API for EU-only accounts (app.eu.kickbox.com). Documented at https://docs.kickbox.com/docs/using-the-api;
+      selected by account type, not by parameter.
+- target: $.servers
+  update:
+  - url: https://open.kickbox.com/v1
+    description: Open disposable-domain lookup. This is the host in Kickbox's own published OpenAPI (openapi/kickbox-disposable-openapi.json);
+      the first-party SDKs use open.kickbox.io, which also answers.
+- target: $.paths['/v1/disposable/{email}'].get
+  update:
+    x-unauthenticated: true
+    x-provider-published-spec: openapi/kickbox-disposable-openapi.json
+    x-provider-operation-id: disposable-email-check

@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/kickbox-api-libraries
+note: >-
+  Kickbox publishes four first-party client libraries (Node.js, PHP, Python, Ruby) from the
+  github.com/kickboxio organization, plus a curated list of community-contributed libraries on the
+  same docs page. Versions and publication dates below were read from each registry's own metadata
+  endpoint on 2026-08-13. Every first-party SDK is materially stale relative to the live API: the
+  Node.js library was last published in 2018, Python in 2020, Ruby in 2021 and PHP in 2023, while the
+  docs describe API behaviour (Bearer auth, sandbox key prefixes, did_you_mean, spike alerts) that
+  post-dates most of those releases.
+packages:
+  - language: javascript
+    registry: npm
+    name: kickbox
+    url: https://www.npmjs.com/package/kickbox
+    install: npm install kickbox
+    official: true
+    version: 2.0.4
+    published: '2018-03-21'
+    source_code: https://github.com/kickboxio/kickbox-node
+    note: >-
+      Latest npm release is 2.0.4 (2018-03-21); the GitHub repository was last pushed 2018-03-21 and
+      is not archived. Eight years without a release.
+  - language: php
+    registry: packagist
+    name: kickbox/kickbox
+    url: https://packagist.org/packages/kickbox/kickbox
+    install: composer require kickbox/kickbox
+    official: true
+    version: 3.0.0
+    published: '2023-03-10'
+    source_code: https://github.com/kickboxio/kickbox-php
+    note: >-
+      Most recently released first-party SDK. Repository last pushed 2023-04-19. This library is the
+      canonical description of the production endpoint surface (verify, verifyBatch, getBatchResults,
+      isDisposable, getCreditBalance) and of the base URLs api.kickbox.com and open.kickbox.io.
+  - language: python
+    registry: pypi
+    name: kickbox
+    url: https://pypi.org/project/kickbox/
+    install: pip install kickbox
+    official: true
+    version: 2.0.4
+    published: '2020-08-24'
+    source_code: https://github.com/kickboxio/kickbox-python
+    note: Repository last pushed 2020-08-20.
+  - language: ruby
+    registry: rubygems
+    name: kickbox
+    url: https://rubygems.org/gems/kickbox
+    install: gem install kickbox
+    official: true
+    version: 2.0.5
+    published: '2021-01-11'
+    source_code: https://github.com/kickboxio/kickbox-ruby
+    note: >-
+      Gem last published 2021-01-11 although the repository was pushed 2024-04-10, so recent repo
+      activity has not been released to RubyGems.
+  - language: java
+    registry: null
+    name: szagriichuk/kickbox
+    url: https://github.com/szagriichuk/kickbox
+    official: false
+    version: null
+    published: null
+    note: >-
+      Community-contributed library listed on the Kickbox docs. Not published to Maven Central under a
+      Kickbox coordinate, so there is no registry metadata endpoint to read a version from.
+  - language: go
+    registry: null
+    name: domodwyer/kickbox
+    url: https://github.com/domodwyer/kickbox
+    install: go get github.com/domodwyer/kickbox
+    official: false
+    version: null
+    published: null
+    note: Community-contributed; module is distributed from GitHub, not a versioned registry release.
+  - language: php
+    registry: null
+    name: stuyam/laravel-kickbox-validator
+    url: https://github.com/stuyam/laravel-kickbox-validator
+    official: false
+    version: null
+    published: null
+    note: Community-contributed Laravel validator listed on the Kickbox docs.
+  - language: dotnet
+    registry: null
+    name: aaxelm/Kickbox
+    url: https://github.com/aaxelm/Kickbox
+    official: false
+    version: null
+    published: null
+    note: >-
+      Community-contributed .NET library. No first-party NuGet package is published under a Kickbox
+      owner, so version is recorded null rather than guessed.
+  - language: asp
+    registry: null
+    name: coderpros/kickbox-asp
+    url: https://github.com/coderpros/kickbox-asp
+    official: false
+    version: null
+    published: null
+    note: Community-contributed Classic ASP library listed on the Kickbox docs.
+summary:
+  official_count: 4
+  community_count: 5
+  official_languages: [javascript, php, python, ruby]
+  oldest_official_release: '2018-03-21'
+  newest_official_release: '2023-03-10'

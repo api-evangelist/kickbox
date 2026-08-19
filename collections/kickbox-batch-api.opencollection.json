@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kickbox Email Verification Account Batch API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start a batch verification job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kickbox.com/v2/verify-batch",
+            "headers": [
+              {
+                "name": "X-Kickbox-Filename",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Start a batch verification job"
+        },
+        {
+          "info": {
+            "name": "Get the status or result of a batch verification job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v2/verify-batch/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Batch job ID."
+              }
+            ]
+          },
+          "docs": "Get the status or result of a batch verification job"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

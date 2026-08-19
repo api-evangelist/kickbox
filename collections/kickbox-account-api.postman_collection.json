@@ -1,0 +1,162 @@
+{
+  "item": [
+    {
+      "id": "fe80d48e-e144-42f6-86d5-c01b744f95b1",
+      "name": "Account",
+      "description": {
+        "content": "Account balance and metadata.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f5bde0de-5cd9-4b2b-8ff4-54ed694fd157",
+          "name": "Get the account verification balance",
+          "request": {
+            "name": "Get the account verification balance",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "balance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "20706145-32bd-4b00-bd95-e51fc66e7188",
+              "name": "Remaining verification credits.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"balance\": 3562\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a2ce0f2-4fc9-4dc0-a93e-ca61d1d2b9b8",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kickbox.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "79c78079-bbdf-45b5-abeb-7f79975e862f",
+    "name": "Kickbox Email Verification Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for verifying the deliverability of email addresses with Kickbox.\nEndpoint paths and authentication are derived from the official Kickbox PHP\nSDK at https://github.com/kickboxio/kickbox-php (see HttpClient.php and\nApi/Kickbox.php), which is the canonical client for the production API.\n\n\nContact Support:\n Name: Kickbox\n Email: help@kickbox.com",
+      "type": "text/plain"
+    }
+  }
+}

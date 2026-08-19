@@ -1,0 +1,97 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.kickbox.com/docs/using-the-api
+docs:
+  - https://docs.kickbox.com/docs/using-the-api#errors
+  - https://docs.kickbox.com/docs/single-verification-api
+  - https://docs.kickbox.com/docs/terminology
+format: vendor-json
+rfc9457: false
+summary: >-
+  Kickbox does not implement RFC 9457 problem+json. It returns standard HTTP status codes with a flat
+  two-field JSON envelope — `success` (boolean) and `message` (human-readable string, null on
+  success). There is no machine-readable error code or type URI, so an agent must branch on the HTTP
+  status and, where that is insufficient, string-match the `message` text. That is the notable gap in
+  this API's error semantics.
+envelope:
+  content_type: application/json
+  fields:
+    - name: success
+      type: boolean
+      description: >-
+        false when the API request itself failed (authentication, balance, rate limit, unexpected
+        error). Note this is distinct from the verification outcome — a successfully processed
+        request for an undeliverable address still returns success: true.
+    - name: message
+      type: string|null
+      description: >-
+        null on success. When success is false, a human-readable explanation of why the request
+        failed. Documented example strings include "Invalid API Key", "Balance Depleted" and
+        "Rate Limit Exceeded".
+  example: '{"message": "Invalid API key", "success": false}'
+problems:
+  - status: 200
+    title: Success
+    description: Request processed. Inspect `result`/`reason` for the verification outcome.
+    source_operation: openapi/kickbox-verification-api-openapi.yml#verifyEmail
+  - status: 400
+    title: Bad Request
+    description: Malformed request — for example a missing or unparseable `email` parameter.
+    remediation: Verify required query parameters are present and URL-encoded.
+  - status: 403
+    title: Forbidden
+    description: >-
+      Returned for an invalid API key and for an exhausted credit balance. The distinguishing signal
+      is the `message` string, not the status code.
+    envelope_message_examples: ['Invalid API Key', 'Balance Depleted', 'Insufficient balance']
+    remediation: >-
+      Check the key is valid and has the required endpoint permission; check X-Kickbox-Balance and
+      enable auto-recharge.
+    sandbox_trigger: insufficient-balance@example.com
+  - status: 415
+    title: Invalid Content Type
+    description: Request body sent with a content type other than the one the endpoint expects.
+    remediation: >-
+      Send `application/json` where a JSON body is required. Note the batch endpoint is the
+      exception — PUT /v2/verify-batch expects `text/csv`.
+  - status: 429
+    title: Rate Limit Exceeded
+    description: >-
+      More than 25 requests in flight from one IP, or more than 8,000 requests in a clock minute.
+    envelope_message_examples: ['Rate Limit Exceeded']
+    remediation: >-
+      The docs state a 429 from the concurrency ceiling may be retried immediately. No Retry-After or
+      RateLimit-* header is returned.
+    see_also: rate-limits/kickbox-rate-limits.yml
+  - status: 500
+    title: Internal Server Error
+    description: Server-side error.
+    remediation: Retry with backoff; contact help@kickbox.com if persistent.
+result_reason_codes:
+  note: >-
+    Not API errors. These are the domain-level `reason` values returned inside a HTTP 200 body
+    alongside `result`, and they are the values an agent actually branches on. Captured here because
+    Kickbox publishes no separate error-code registry and this is the closest equivalent.
+  envelope_fields: [result, reason]
+  results: [deliverable, undeliverable, risky, unknown]
+  reasons:
+    - {code: invalid_email, result: undeliverable, meaning: Specified email is not a valid email address syntax}
+    - {code: invalid_domain, result: undeliverable, meaning: Domain for email does not exist}
+    - {code: rejected_email, result: undeliverable, meaning: Email address was rejected by the SMTP server; the address does not exist}
+    - {code: accepted_email, result: deliverable, meaning: Email address was accepted by the SMTP server}
+    - {code: low_quality, result: risky, meaning: Email address has quality issues that may make it a risky or low-value address}
+    - {code: low_deliverability, result: risky, meaning: Email address appears deliverable but deliverability cannot be guaranteed}
+    - {code: no_connect, result: unknown, meaning: Could not connect to SMTP server}
+    - {code: timeout, result: unknown, meaning: SMTP session timed out}
+    - {code: invalid_smtp, result: undeliverable, meaning: SMTP server returned an unexpected/invalid response}
+    - {code: unavailable_smtp, result: unknown, meaning: SMTP server was unavailable to process the request}
+    - {code: unexpected_error, result: unknown, meaning: An unexpected error has occurred}
+  billing_note: >-
+    Verifications returning `unknown` are refunded — the credit is not consumed.
+batch_job_errors:
+  note: >-
+    The batch API surfaces failure as a job status rather than an HTTP error. GET
+    /v2/verify-batch/{id} returns status one of starting, processing, completed, failed; on `failed`
+    the `error` field carries a description string.
+  statuses: [starting, processing, completed, failed]
+  source_operation: openapi/kickbox-batch-api-openapi.yml#getBatchResults

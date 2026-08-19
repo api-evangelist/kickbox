@@ -1,0 +1,51 @@
+generated: '2026-08-13'
+method: probed
+status: published
+source: https://docs.kickbox.com/mcp
+deployment:
+  mode: remote
+  endpoint: https://docs.kickbox.com/mcp
+  auth: unknown
+  verified: probed
+server:
+  name: kickbox-docs
+  transport: http
+  url: https://docs.kickbox.com/mcp
+  host_control: >-
+    Served from docs.kickbox.com, a subdomain Kickbox controls (the ReadMe-hosted developer
+    documentation site, readme-subdomain "kickbox"). The endpoint is the documentation MCP server
+    the ReadMe platform exposes for this project, not a separate verification-API MCP server.
+evidence:
+  - url: https://docs.kickbox.com/mcp
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    response: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+    fetched: '2026-08-13'
+  - url: https://docs.kickbox.com/mcp
+    method: POST
+    body: initialize (protocolVersion 2026-06-18)
+    http_status: 401
+    response: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+    fetched: '2026-08-13'
+  - url: https://api.kickbox.com/mcp
+    http_status: 404
+    note: >-
+      Negative control. The API host returns a JSON 404 for /mcp, which is what distinguishes the
+      docs-host 401 as a real MCP server responding rather than a catch-all.
+gated: true
+gated_note: >-
+  Both the initialize handshake and tools/list return JSON-RPC error -32001 "Authorization required",
+  so the live tool list and per-tool inputSchema could not be enumerated anonymously. No
+  /.well-known/oauth-protected-resource or /.well-known/oauth-authorization-server document is served
+  on docs.kickbox.com (both 404), so the authorization server could not be discovered either and the
+  auth mode is recorded as unknown rather than guessed as oauth.
+tools: []
+tools_note: >-
+  Deliberately empty. Kickbox publishes no MCP tool list in its documentation or llms.txt, and the
+  live tools/list call is auth-gated, so there is nothing real to record. No candidate tools are
+  derived here — the derived REST-operation view lives in mcp/kickbox-tool-crosswalk.yml under
+  rest_only[], where it is clearly labelled as unbound.
+other_endpoints_probed:
+  - {url: 'https://mcp.kickbox.com/mcp', result: DNS does not resolve}
+  - {url: 'https://kickbox.com/mcp', http_status: 405}

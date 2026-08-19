@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kickbox Email Account Verification API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify a single email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kickbox.com/v2/verify",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "The email address to verify."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Verification timeout in milliseconds."
+              }
+            ]
+          },
+          "docs": "Verify a single email address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

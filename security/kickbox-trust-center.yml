@@ -1,0 +1,81 @@
+generated: '2026-08-13'
+method: searched
+probe: false
+source: https://docs.kickbox.com/docs/security-and-compliance
+url: https://trust.kickbox.com/
+http_status: 200
+verified: '2026-08-13'
+summary: >-
+  Kickbox operates a trust center at trust.kickbox.com, linked from its own Security and Compliance
+  documentation page with deep links into five control categories. The page itself is a JavaScript
+  single-page application and renders no server-side text, so the certification list below is taken
+  from Kickbox's documentation and pricing page rather than scraped from the trust center — the
+  mechanical probe (0-working/probe-security-programs.py) returned no hit for exactly that reason.
+control_categories:
+  - {name: Infrastructure security, url: 'https://trust.kickbox.com/controls#infrastructure-security'}
+  - {name: Organizational security, url: 'https://trust.kickbox.com/controls#organizational-security'}
+  - {name: Product security, url: 'https://trust.kickbox.com/controls#product-security'}
+  - {name: Internal security procedures, url: 'https://trust.kickbox.com/controls#internal-security-procedures'}
+  - {name: Data and privacy, url: 'https://trust.kickbox.com/controls#data-and-privacy'}
+certifications:
+  - name: SOC 2
+    status: claimed
+    note: >-
+      Kickbox makes two different claims about SOC 2 and both are recorded here rather than
+      reconciled. The docs page (Security and Compliance) invites readers to "view our current
+      progress towards SOC2 compliance" on the trust center, which reads as in-progress. The pricing
+      page states Kickbox "is fully GDPR-compliant and SOC II certified". No audit report or
+      attestation date is published on either page, so the status is recorded as claimed.
+    sources:
+      - https://docs.kickbox.com/docs/security-and-compliance
+      - https://kickbox.com/pricing
+  - name: GDPR
+    status: claimed-compliant
+    note: >-
+      "We are GDPR compliant, following all of the EU's regulations for data protection for our EU
+      customers." Kickbox operates dedicated EU verification servers and a separate EU application
+      (app.eu.kickbox.com / api.eu.kickbox.com).
+    docs: https://docs.kickbox.com/docs/gdpr
+    sources: [https://docs.kickbox.com/docs/security-and-compliance]
+  - name: CCPA
+    status: claimed-ready
+    note: Documented as "CCPA and GDPR ready".
+    sources: [https://docs.kickbox.com/docs/security-and-compliance]
+memberships:
+  - name: M3AAWG
+    note: >-
+      Documented as membership in anti-abuse organizations "like M3WAGG" (the provider's own spelling
+      of M3AAWG, the Messaging, Malware and Mobile Anti-Abuse Working Group). Recorded verbatim from
+      the source with the intended organization noted.
+    sources: [https://docs.kickbox.com/docs/security-and-compliance]
+data_handling:
+  - >-
+    Kickbox states it does not send email to verify addresses and does not accept customers who use
+    their lists for spam.
+  - >-
+    EU customers can have verifications processed on dedicated EU servers.
+account_security:
+  - {feature: Sign in with Google, docs: 'https://docs.kickbox.com/docs/authentication-methods'}
+  - {feature: Two-factor authentication, docs: 'https://docs.kickbox.com/docs/authentication-methods'}
+  - {feature: Okta SSO, docs: 'https://docs.kickbox.com/docs/okta-authentication'}
+privacy:
+  privacy_policy: https://docs.kickbox.com/docs/privacy-policy
+  subprocessors: https://docs.kickbox.com/docs/subprocessors
+  anti_spam_policy: https://docs.kickbox.com/docs/anti-spam-policy
+  list_security: https://docs.kickbox.com/docs/list-security-and-privacy
+  dsar_portal: https://privacyportal.onetrust.com/webform/f73513a8-7a10-4a9d-939a-703f8d994839/262761ab-edc4-440a-8e56-e6348b131382
+vulnerability_disclosure:
+  published: false
+  note: >-
+    Separately searched and not found. No /.well-known/security.txt on any Kickbox host, no
+    responsible-disclosure or bug-bounty page, and no HackerOne/Bugcrowd/Intigriti program. The
+    mechanical probe returned vdp=none. No security/kickbox-vulnerability-disclosure.yml artifact and
+    no Security pointer are emitted — an honest absence.
+  evidence:
+    - {url: 'https://kickbox.com/.well-known/security.txt', status: 404}
+    - {url: 'https://kickbox.com/security.txt', status: 404}
+    - {url: 'https://api.kickbox.com/.well-known/security.txt', status: 404}
+evidence:
+  - {source: 'https://docs.kickbox.com/docs/security-and-compliance', status: 200, kind: provider-documentation}
+  - {source: 'https://trust.kickbox.com/', status: 200, kind: trust-center, note: JS-rendered; no server-side text}
+  - {source: 'https://kickbox.com/pricing', status: 200, kind: marketing-claim}
