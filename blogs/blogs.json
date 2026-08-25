@@ -13,10 +13,16 @@
       "feed_url": "https://docs.kickbox.com/llms.txt",
       "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
+    },
+    {
+      "source": "https://blog.kickbox.com",
+      "feed_url": "https://blog.kickbox.com/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
-  "fetched": "2026-08-15T12:11:08Z",
-  "post_count": 15
+  "fetched": "2026-08-22T20:20:02Z",
+  "post_count": 16
 }
