@@ -98,9 +98,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kickbox-open-api-openapi.yml
-  - type: OpenAPI
-    name: Kickbox published disposable-email-check OpenAPI (verbatim)
-    url: openapi/kickbox-disposable-openapi.json
   - type: Overlay
     url: overlays/kickbox-open-api-overlay.yaml
   - type: APIReference
@@ -119,6 +116,16 @@ apis:
     url: overlays/kickbox-verification-api-overlay.yaml
   - type: APIReference
     url: https://docs.kickbox.com/docs/single-verification-api
+- aid: kickbox:kickbox-disposable-api
+  name: Kickbox Disposable API
+  description: The Disposable API from Kickbox — 1 operation(s) for disposable.
+  humanURL: https://docs.kickbox.com
+  baseURL: https://api.kickbox.com/v2
+  tags:
+  - Disposable
+  properties:
+  - type: OpenAPI
+    url: openapi/kickbox-disposable-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/kickbox-agentic-access.yml
