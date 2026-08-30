@@ -1,0 +1,52 @@
+openapi: 3.2.0
+info:
+  title: base-path Disposable API
+  version: '2.0'
+servers:
+- url: https://open.kickbox.com/v1
+security:
+- {}
+tags:
+- name: Disposable
+paths:
+  /disposable/:address:
+    get:
+      summary: Disposable Email Check
+      description: A free, open endpoint for checking if an email is hosted by known disposable domains.
+      operationId: disposable-email-check
+      parameters:
+      - name: :address
+        in: path
+        description: Email address or domain to check
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{"disposable": true}'
+              schema:
+                type: object
+                properties:
+                  disposable:
+                    type: boolean
+                    example: true
+                    default: true
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: http
+          code: GET https://open.kickbox.com/v1/disposable/example@mailinator.com
+        samples-languages:
+        - http
+      tags:
+      - Disposable
+x-readme:
+  headers: []
+  explorer-enabled: true
+  proxy-enabled: true
+x-readme-fauxas: true
