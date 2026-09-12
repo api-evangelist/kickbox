@@ -2,13 +2,18 @@
   "repo": "kickbox",
   "feeds": [
     {
+      "source": "https://blog.kickbox.com",
+      "feed_url": "https://blog.kickbox.com/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
       "source": "https://blog.kickbox.com/rss/",
       "feed_url": "https://blog.kickbox.com/rss/",
       "title": "",
       "saved": 0,
-      "method": "feed",
-      "nature": "vendor-blog",
-      "nature_basis": "blog_subdomain"
+      "method": "feed"
     },
     {
       "source": "https://docs.kickbox.com/llms.txt",
@@ -16,18 +21,9 @@
       "title": "",
       "saved": 0,
       "method": "none"
-    },
-    {
-      "source": "https://blog.kickbox.com",
-      "feed_url": "https://blog.kickbox.com/rss/",
-      "title": "",
-      "saved": 0,
-      "method": "discovered",
-      "nature": "vendor-blog",
-      "nature_basis": "blog_subdomain"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 16,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "blog_subdomain",
