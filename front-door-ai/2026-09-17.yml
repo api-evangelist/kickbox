@@ -1,0 +1,25 @@
+# Front Door AI Index — kickbox — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: kickbox
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: kickbox.com
+  final_host: kickbox.com
+  ownership: own
+  owner: kickbox
+  shares_host_with: null
+  inherited_from: null
+  verdict: silent
+  score: 0
+  host_score: 0
+  density: 0.0
+  words: 876
+  tiers:
+    agentic: 0
+    core: 0
+    model: 0
+  ambiguous: 1
+  top_terms:
+    smart: 1

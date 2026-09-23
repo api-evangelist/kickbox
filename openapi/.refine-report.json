@@ -1,12 +1,11 @@
 {
   "provider": "kickbox",
   "sources": [
-    "kickbox-account-api-openapi.yml",
-    "kickbox-batch-api-openapi.yml",
-    "kickbox-open-api-openapi.yml",
-    "kickbox-verification-api-openapi.yml"
+    "_original/kickbox-disposable-openapi.json",
+    "_original/kickbox-openapi.yml"
   ],
   "outputs": [
+    "kickbox-disposable-api-openapi.yml",
     "kickbox-account-api-openapi.yml",
     "kickbox-batch-api-openapi.yml",
     "kickbox-open-api-openapi.yml",
@@ -15,6 +14,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kickbox-disposable-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kickbox-disposable-openapi.json: tagged paths GET /disposable/:address -> Disposable",
+    "kickbox-disposable-openapi.json: declared missing tag: Disposable",
+    "kickbox-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "kickbox-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kickbox-batch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kickbox-disposable-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kickbox-open-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kickbox-verification-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
