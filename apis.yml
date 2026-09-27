@@ -35,6 +35,11 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kickbox.png
 tags:
   - Email Verification
+  - Deliverability
+  - Data Quality
+  - Email
+tags_raw:
+  - Email Verification
   - Email Validation
   - Deliverability
   - Data Quality
