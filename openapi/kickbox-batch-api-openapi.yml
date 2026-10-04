@@ -75,18 +75,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-              message:
-                type: string
   schemas:
     BatchStatusResponse:
       type: object
@@ -129,6 +117,18 @@ components:
           type: boolean
         message:
           type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              message:
+                type: string
   securitySchemes:
     TokenAuth:
       type: http
