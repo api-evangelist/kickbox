@@ -1,4 +1,4 @@
-# Kickbox (kickbox)
+# Kickbox
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,61 +66,152 @@
 
 Kickbox is an email verification and list cleaning service that helps senders improve deliverability by detecting invalid, disposable, role-based, and risky email addresses before they enter mailing lists. The platform offers real-time single verification, bulk batch verification, and a deliverability monitoring suite. Kickbox provides a simple HTTPS REST API authenticated by API key returning structured verification results with reason codes.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/kickbox/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/kickbox/refs/heads/main/apis.yml)
+**Areas:** Email Verification · Deliverability · Data Quality · Email
 
-## Scope
+## Kickbox on APIs.io
 
-- **Type:** Index
+Everything profiled for Kickbox is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kickbox/](https://apis.io/providers/kickbox/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (6)
 
-- Email Verification
-- Email Validation
-- Deliverability
-- Data Quality
-- Email
+- [Kickbox Email Verification API](https://apis.io/apis/kickbox/verification-api/) — REST API for verifying the deliverability of email addresses in real time. Returns a result (deliverable, undeliverable, risky, unknown), a reason code,…
+- [Kickbox Account API](https://apis.io/apis/kickbox/kickbox-account-api/) — Account balance and metadata.
+- [Kickbox Batch API](https://apis.io/apis/kickbox/kickbox-batch-api/) — Bulk CSV email verification.
+- [Kickbox Open API](https://apis.io/apis/kickbox/kickbox-open-api/) — Free disposable-domain lookup (no auth).
+- [Kickbox Verification API](https://apis.io/apis/kickbox/kickbox-verification-api/) — Real-time email verification.
+- [Kickbox Disposable API](https://apis.io/apis/kickbox/kickbox-disposable-api/) — The Disposable API from Kickbox — 1 operation(s) for disposable.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-11
-- **Modified:** 2026-05-11
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Kickbox Email Verification API
+Event-driven and webhook contracts.
 
-REST API for verifying the deliverability of email addresses in real time. Returns a result (deliverable, undeliverable, risky, unknown), a reason code, plus flags for role addresses, disposable domains, and free email providers. Authentication uses an API key supplied as a query string parameter or in the Authorization header. Sandbox mode is available for testing without consuming credits.
+- [Kickbox Batch Webhooks](https://apis.io/asyncapis/kickbox/kickbox-batch-webhooks/)
 
-- **Human URL:** [https://docs.kickbox.com](https://docs.kickbox.com)
-- **Base URL:** `https://api.kickbox.com/v2`
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- Email Verification
-- Deliverability
-- Validation
+- [kickbox-docs](https://apis.io/servers/kickbox/kickbox-docs/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.kickbox.com)
-- [API Reference](https://docs.kickbox.com/reference/single-verification)
-- [P H P  S D K](https://github.com/kickboxio/kickbox-php)
-- [Python  S D K](https://github.com/kickboxio/kickbox-python)
-- [Postman Collection](collections/kickbox.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kickbox.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Common Properties
+- [Kickbox Agentic Access](https://apis.io/agentic-access/kickbox/kickbox-agentic-access/)
 
-- [LinkedIn](https://www.linkedin.com/company/kickbox)
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Kickbox Email Verification API](https://apis.io/collections/kickbox/open-kickbox/)
+- [Kickbox Email Verification Account API](https://apis.io/collections/kickbox/open-kickbox-account-api/)
+- [Kickbox Email Verification Account Batch API](https://apis.io/collections/kickbox/open-kickbox-batch-api/)
+- [Kickbox Email Verification Account Open API](https://apis.io/collections/kickbox/open-kickbox-open-api/)
+- [Kickbox Email Account Verification API](https://apis.io/collections/kickbox/open-kickbox-verification-api/)
+
+#### Overlays (4)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Kickbox Account Api Overlay](https://apis.io/overlays/kickbox/kickbox-account-api-overlay/)
+- [Kickbox Batch Api Overlay](https://apis.io/overlays/kickbox/kickbox-batch-api-overlay/)
+- [Kickbox Open Api Overlay](https://apis.io/overlays/kickbox/kickbox-open-api-overlay/)
+- [Kickbox Verification Api Overlay](https://apis.io/overlays/kickbox/kickbox-verification-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kickbox Authentication](https://apis.io/security/kickbox/kickbox-authentication/)
+- [Kickbox Domain Security](https://apis.io/security/kickbox/kickbox-domain-security/)
+- [Kickbox Trust Center](https://apis.io/security/kickbox/kickbox-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Kickbox Plans Pricing](https://apis.io/plans/kickbox/kickbox-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Kickbox Rate Limits](https://apis.io/rate-limits/kickbox/kickbox-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://kickbox.com)
 - [Documentation](https://docs.kickbox.com)
+- [Getting started](https://docs.kickbox.com/docs/using-the-api)
+- [API reference](https://docs.kickbox.com/docs/single-verification-api)
 - [Pricing](https://kickbox.com/pricing)
-- [Sign Up](https://app.kickbox.com/signup)
-- [GitHub Organization](https://github.com/kickboxio)
-- [Support](https://kickbox.com/support)
-- [L L Ms Txt](https://docs.kickbox.com/llms.txt)
+- [Sign up](https://app.kickbox.com/signup)
+- [Support](https://articles.kickbox.com/en/collections/1840339-kickbox-help-articles)
+- [Blog](https://blog.kickbox.com)
+- [Compliance](https://docs.kickbox.com/docs/security-and-compliance)
+- [Trust centre](https://trust.kickbox.com/)
+- [Terms of service](https://docs.kickbox.com/docs/terms-of-service)
+- [Privacy policy](https://docs.kickbox.com/docs/privacy-policy)
+- [GitHub](https://github.com/kickboxio)
+- [Status](https://status.kickbox.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 55.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.7 |
+| Contract quality | 54.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 47.4 |
+| Developer ergonomics | 72.0 |
+| Access clarity | 69.7 |
+
+**Agent readiness 40.3** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 23.0** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kickbox/](https://apis.io/providers/kickbox/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kickbox: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kickbox/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
